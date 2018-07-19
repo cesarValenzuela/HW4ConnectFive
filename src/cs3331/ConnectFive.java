@@ -94,7 +94,8 @@ public class ConnectFive extends JFrame {
     private JToolBar toolBar() {
         JToolBar toolBar = new JToolBar("Connect5");
         JButton button = new JButton(createImageIcon("play.png"));
-        JButton button1 = new JButton(createImageIcon("play.png"));
+        //button.setIcon(createImageIcon("play.png"));
+        JButton button1 = new JButton(createImageIcon("wifi.png"));
         JButton button2 = new JButton(createImageIcon("play.png"));
         //button.addActionListener();
         button.setToolTipText("Play new Battle Royal");
@@ -104,6 +105,7 @@ public class ConnectFive extends JFrame {
         toolBar.add(button2);
         return toolBar;
     }
+
 
     private ImageIcon createImageIcon(String filename) {
         URL imageURL = getClass().getResource(IMAGE_DIR + filename);
@@ -217,7 +219,7 @@ public class ConnectFive extends JFrame {
                 message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
 
             } catch (Exception ex1) {
-                System.out.println("Something else went wrong");
+                System.out.println("ITS A TIE");
             }
     }
 
