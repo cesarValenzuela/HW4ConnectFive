@@ -179,7 +179,7 @@ public class ConnectFive extends JFrame {
                 int x = locateXY(e.getX());
                 int y = locateXY(e.getY());
                 message.setText("X: " + x + " " + "Y: " + y);
-                Sound.playSound();
+               // Sound.playTileSound();
                 passCoordinates(x, y);
                 repaint();
 
@@ -206,19 +206,24 @@ public class ConnectFive extends JFrame {
                     turn = true;
                 }
             } catch (PlayerWonException ex1) {
+                Sound.playWinSound();
                 if (turn) {
-                    boardPanel.setVisible(false);
+
                     message.setText("PLAYER 1 IS THE WINNER!");
+                    boardPanel.setVisible(false);
                 } else {
                     message.setText("PLAYER 2 IS THE WINNER");
                     boardPanel.setVisible(false);
                 }
+                //winning sound here
             } catch (InValidDiskPositionException ex1) {
                 message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
+                Sound.playInvalidTileSound();
 
             } catch (Exception ex1) {
                 System.out.println("Something else went wrong");
             }
+        Sound.playTileSound();
     }
 
     /**
