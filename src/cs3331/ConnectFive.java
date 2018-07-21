@@ -25,6 +25,8 @@ public class ConnectFive extends JFrame {
      * directory where images are stored
      */
     private final static String IMAGE_DIR = "/image/";
+
+    private JColorChooser tcc;
     /**
      * Label containing message to user
      */
@@ -92,13 +94,13 @@ public class ConnectFive extends JFrame {
         JToolBar toolBar = new JToolBar("Connect5");
         JButton button = new JButton(createImageIcon("play.png"));
         JButton button1 = new JButton(createImageIcon("wifi-green.png"));
-        JButton button2 = new JButton(createImageIcon("play.png"));
+        JButton button2 = new JButton(createImageIcon("paint.png"));
         //button.addActionListener();
         button.setToolTipText("Play new Battle Royal");
         button.setFocusPainted(false);
         toolBar.add(button);
         toolBar.add(button1);
-        //toolBar.add(button2);
+        toolBar.add(button2);
         return toolBar;
     }
 
@@ -173,6 +175,11 @@ public class ConnectFive extends JFrame {
 
             }//end mouse pressed
         });
+    }
+
+    private void colorChooser() {
+        tcc = new JColorChooser(Color.RED);
+        tcc.getUI();
     }
 
     /**
