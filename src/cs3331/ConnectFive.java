@@ -123,11 +123,13 @@ public class ConnectFive extends JFrame {
         JPanel boardSizePanel = new JPanel(new FlowLayout());
         JButton largeBoard = new JButton("Board Size (15x15)");
         JButton smallBoard = new JButton("Board Size (9x9)");
+        //ATTENTION THIS IS NOT WORKING IF NO IS CLICKED IT CRATES A NEW BOARD, ALSO CANCEL DOES NOT WORK SOME TIMES
         for (JButton button : new JButton[]{largeBoard, smallBoard}) {
             button.setFocusPainted(false);
             button.addActionListener(e -> {
                 int ans;
                 message.setText((e.getSource() == largeBoard ? "15" : "9"));
+                Sound.playAlertSound();
                 if (e.getSource() == largeBoard) {
                     ans = JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
                     switch (ans){
@@ -179,7 +181,7 @@ public class ConnectFive extends JFrame {
                 int x = locateXY(e.getX());
                 int y = locateXY(e.getY());
                 message.setText("X: " + x + " " + "Y: " + y);
-                Sound.playSound();
+               // Sound.playTileSound();
                 passCoordinates(x, y);
                 repaint();
 
@@ -206,19 +208,25 @@ public class ConnectFive extends JFrame {
                     turn = true;
                 }
             } catch (PlayerWonException ex1) {
+
                 if (turn) {
-                    boardPanel.setVisible(false);
+
                     message.setText("PLAYER 1 IS THE WINNER!");
+                    boardPanel.setVisible(false);
                 } else {
                     message.setText("PLAYER 2 IS THE WINNER");
                     boardPanel.setVisible(false);
                 }
+                //winning sound here
+                Sound.playWinSound();
             } catch (InValidDiskPositionException ex1) {
                 message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
+                Sound.playInvalidTileSound();
 
             } catch (Exception ex1) {
                 System.out.println("Something else went wrong");
             }
+        Sound.playTileSound();
     }
 
     /**
