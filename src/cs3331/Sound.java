@@ -21,6 +21,9 @@ public class Sound{
     public static void playInvalidTileSound(){
         playSound("src\\Sound\\errorSound.wav");
     }
+    public static void playAlertSound(){
+        playSound("src\\Sound\\alertSound.wav");
+    }
     private static void playSound(String fileName){
         try{
             Clip audioClip=AudioSystem.getClip();
@@ -31,6 +34,7 @@ public class Sound{
             System.out.println("Sound Problem");
         }
     }
+
 
 
 }

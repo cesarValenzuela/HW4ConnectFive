@@ -123,11 +123,13 @@ public class ConnectFive extends JFrame {
         JPanel boardSizePanel = new JPanel(new FlowLayout());
         JButton largeBoard = new JButton("Board Size (15x15)");
         JButton smallBoard = new JButton("Board Size (9x9)");
+        //ATTENTION THIS IS NOT WORKING IF NO IS CLICKED IT CRATES A NEW BOARD, ALSO CANCEL DOES NOT WORK SOME TIMES
         for (JButton button : new JButton[]{largeBoard, smallBoard}) {
             button.setFocusPainted(false);
             button.addActionListener(e -> {
                 int ans;
                 message.setText((e.getSource() == largeBoard ? "15" : "9"));
+                Sound.playAlertSound();
                 if (e.getSource() == largeBoard) {
                     ans = JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
                     switch (ans){
@@ -206,7 +208,7 @@ public class ConnectFive extends JFrame {
                     turn = true;
                 }
             } catch (PlayerWonException ex1) {
-                Sound.playWinSound();
+
                 if (turn) {
 
                     message.setText("PLAYER 1 IS THE WINNER!");
@@ -216,6 +218,7 @@ public class ConnectFive extends JFrame {
                     boardPanel.setVisible(false);
                 }
                 //winning sound here
+                Sound.playWinSound();
             } catch (InValidDiskPositionException ex1) {
                 message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
                 Sound.playInvalidTileSound();
