@@ -1,5 +1,7 @@
 package cs3331;
 
+import com.sun.webkit.ColorChooser;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,7 +38,10 @@ public class ConnectFive extends JFrame {
      * frame.
      */
     private BoardPanel boardPanel;
+
     private int squareSize = 15;
+
+    private Color color;
 
     // player1 is true, player2 is false
     private boolean turn = true;
@@ -55,7 +60,6 @@ public class ConnectFive extends JFrame {
 
         setVisible(true);
         pack();
-        setResizable(false);
     }
 
     public ConnectFive(int size) {
@@ -66,7 +70,73 @@ public class ConnectFive extends JFrame {
         setVisible(true);
         pack();
         setResizable(false);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    /**
+     * creates the buttons, and adds the other panels to create
+     * the overall GUI of the connect 5 game.
+     *
+     * @param size the size of the board to be played
+     */
+    public void createGUI(int size) {
+        //adding buttons (top)
+        JPanel boardSizePanel = new JPanel(new FlowLayout());
+//        JButton largeBoard = new JButton("Board Size (15x15)");
+//        JButton smallBoard = new JButton("Board Size (9x9)");
+//        for (JButton button : new JButton[]{largeBoard, smallBoard}) {
+//            button.setFocusPainted(false);
+//            button.addActionListener(e -> {
+//                int ans;
+//                message.setText((e.getSource() == largeBoard ? "15" : "9"));
+//                if (e.getSource() == largeBoard) {
+//                    ans = JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
+//                    switch (ans) {
+//                        case NO_OPTION:
+//
+//                        case YES_OPTION:
+//                            this.dispose();
+//                            new ConnectFive(15);
+//                    }
+//
+//                } else {
+//                    JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
+//                    this.dispose();
+//                    new ConnectFive(9);
+//
+//                }
+//            });
+//            boardSizePanel.add(button);
+//        }
+
+        JPanel jPanel = new JPanel();
+        jPanel.setLayout(new BorderLayout());
+        jPanel.add(boardSizePanel, BorderLayout.NORTH);
+        jPanel.add(boardPan(size), BorderLayout.CENTER);
+        jPanel.add(statusPanel(), BorderLayout.SOUTH);
+
+        JPanel jPanel1 = new JPanel();
+        jPanel1.setLayout(new BorderLayout());
+        jPanel1.add(menuBar(), BorderLayout.NORTH);
+        jPanel1.add(toolBar(), BorderLayout.SOUTH);
+        getContentPane().add(jPanel, BorderLayout.CENTER);
+        getContentPane().add(jPanel1, BorderLayout.NORTH);
+
+
+        // Handler for user input when placing a disc on the grid.
+        boardPanel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+
+                int x = locateXY(e.getX());
+                int y = locateXY(e.getY());
+                message.setText("X: " + x + " " + "Y: " + y);
+                Sound.playSound();
+                passCoordinates(x, y);
+                repaint();
+
+            }//end mouse pressed
+        });
     }
 
     private JMenuBar menuBar() {
@@ -92,89 +162,78 @@ public class ConnectFive extends JFrame {
 
     private JToolBar toolBar() {
         JToolBar toolBar = new JToolBar("Connect5");
-        JButton button = new JButton(createImageIcon("play.png"));
-        JButton button1 = new JButton(createImageIcon("wifi-green.png"));
-        JButton button2 = new JButton(createImageIcon("paint.png"));
-        //button.addActionListener();
-        button.setToolTipText("Play new Battle Royal");
-        button.setFocusPainted(false);
-        toolBar.add(button);
-        toolBar.add(button1);
-        toolBar.add(button2);
+
+        JButton playButton = new JButton(createImageIcon("play30.png"));
+
+        //Dialog to start a new game
+        playButton.addActionListener(e -> {
+            Object[] options = {"15x15", "9x9"};
+            int n = JOptionPane.showOptionDialog(this,
+                    "pick a size", "New Game",
+                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+                    null, options, options[1]);
+            if (n == JOptionPane.YES_OPTION) {
+                //JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
+                this.dispose();
+                new ConnectFive(15);
+            } else if (n == NO_OPTION) {
+                //JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
+                this.dispose();
+                new ConnectFive(9);
+            } else {
+
+            }
+        });
+        JButton paintButton = new JButton(createImageIcon("paint30.png"));
+        paintButton.addActionListener(e -> {
+            color = JColorChooser.showDialog(this, "pick", Color.ORANGE);
+            if (color == null) {
+                color = Color.RED;
+            } else{
+                boardPanel.setColorP1(color);
+            }
+        });
+
+        JButton easyButton = new JButton(createImageIcon("easy30.png"));
+        JButton mediumButton = new JButton(createImageIcon("medium30.png"));
+
+        playButton.setToolTipText("Play new Battle Royal");
+        playButton.setFocusPainted(false);
+        toolBar.add(playButton);
+        toolBar.add(paintButton);
+        toolBar.add(easyButton);
+        toolBar.add(mediumButton);
         return toolBar;
     }
 
     /**
-     * creates the buttons, and adds the other panels to create
-     * the overall GUI of the connect 5 game.
+     * creates the board panel that displays the current game
      *
-     * @param size the size of the board to be played
+     * @param size
+     * @return a panel that can be added to the window
      */
-    public void createGUI(int size) {
-        //adding buttons (top)
-        JPanel boardSizePanel = new JPanel(new FlowLayout());
-        JButton largeBoard = new JButton("Board Size (15x15)");
-        JButton smallBoard = new JButton("Board Size (9x9)");
-        for (JButton button : new JButton[]{largeBoard, smallBoard}) {
-            button.setFocusPainted(false);
-            button.addActionListener(e -> {
-                int ans;
-                message.setText((e.getSource() == largeBoard ? "15" : "9"));
-                if (e.getSource() == largeBoard) {
-                    ans = JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
-                    switch (ans) {
-                        case NO_OPTION:
+    private BoardPanel boardPan(int size) {
 
-                        case YES_OPTION:
-                            this.dispose();
-                            new ConnectFive(15);
-                    }
+        boardPanel = new BoardPanel(new Board(size));
+        boardPanel.setPreferredSize(new Dimension(725, 725));
+        return boardPanel;
+    }
 
-                } else {
-                    JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
-                    this.dispose();
-                    new ConnectFive(9);
+    /**
+     * Creates a panel that displays a text status about the game
+     *
+     * @return JPanel to be added to a window
+     */
+    private JPanel statusPanel() {
+        JPanel statusPanel = new JPanel();
+        statusPanel.setBackground(Color.DARK_GRAY);
+        statusPanel.setPreferredSize(new Dimension(650, 50));
+        message = new JLabel("Welcome to Connect Five");
+        message.setForeground(Color.WHITE);
+        message.setFont(new Font(message.getName(), Font.BOLD, 26));
+        statusPanel.add(message);
 
-                }
-            });
-            boardSizePanel.add(button);
-        }
-
-        JPanel jPanel = new JPanel();
-        jPanel.setLayout(new BorderLayout());
-        jPanel.add(boardSizePanel, BorderLayout.NORTH);
-        jPanel.add(boardPan(size), BorderLayout.CENTER);
-        jPanel.add(statusPanel(), BorderLayout.SOUTH);
-
-        JPanel jPanel1 = new JPanel();
-        jPanel1.setLayout(new BorderLayout());
-        jPanel1.add(menuBar(), BorderLayout.NORTH);
-        jPanel1.add(toolBar(), BorderLayout.SOUTH);
-        getContentPane().add(jPanel, BorderLayout.CENTER);
-        getContentPane().add(jPanel1, BorderLayout.NORTH);
-//        getContentPane().add(boardSizePanel, BorderLayout.NORTH);
-//
-//        //create Board GUI instance (center)
-//        getContentPane().add(boardPan(size), BorderLayout.CENTER);
-//
-//
-//        //creating message label (bottom)
-//        getContentPane().add(statusPanel(), BorderLayout.SOUTH);
-
-
-        // Handler for user input when placing a disc on the grid.
-        boardPanel.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-
-                int x = locateXY(e.getX());
-                int y = locateXY(e.getY());
-                message.setText("X: " + x + " " + "Y: " + y);
-                Sound.playSound();
-                passCoordinates(x, y);
-                repaint();
-
-            }//end mouse pressed
-        });
+        return statusPanel;
     }
 
     private void colorChooser() {
@@ -212,7 +271,8 @@ public class ConnectFive extends JFrame {
             message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
 
         } catch (Exception ex1) {
-            System.out.println("Something else went wrong");
+            System.out.println("ITS A TIE");
+
         }
     }
 
@@ -234,36 +294,6 @@ public class ConnectFive extends JFrame {
         return result + 1;
     }
 
-    /**
-     * creates the board panel that displays the current game
-     *
-     * @param size
-     * @return a panel that can be added to the window
-     */
-    private BoardPanel boardPan(int size) {
-
-        boardPanel = new BoardPanel(new Board(size));
-        boardPanel.setPreferredSize(new Dimension(725, 725));
-        return boardPanel;
-    }
-
-    /**
-     * Creates a panel that displays a text status about the game
-     *
-     * @return JPanel to be added to a window
-     */
-    private JPanel statusPanel() {
-        JPanel statusPanel = new JPanel();
-        statusPanel.setBackground(Color.DARK_GRAY);
-        statusPanel.setPreferredSize(new Dimension(650, 50));
-        message = new JLabel("Welcome to Connect Five");
-        message.setForeground(Color.WHITE);
-        message.setFont(new Font(message.getName(), Font.BOLD, 26));
-        statusPanel.add(message);
-
-        return statusPanel;
-    }
-
     private ImageIcon createImageIcon(String filename) {
         URL imageURL = getClass().getResource(IMAGE_DIR + filename);
         if (imageURL != null) {
@@ -278,4 +308,5 @@ public class ConnectFive extends JFrame {
     public static void main(String[] args) {
         new ConnectFive();
     }
+
 }
