@@ -1,19 +1,13 @@
 package cs3331;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 
-import javax.swing.*;
-
-import static javax.swing.JOptionPane.CLOSED_OPTION;
 import static javax.swing.JOptionPane.NO_OPTION;
 import static javax.swing.JOptionPane.YES_OPTION;
 
@@ -28,6 +22,12 @@ import static javax.swing.JOptionPane.YES_OPTION;
 public class ConnectFive extends JFrame {
 
     /**
+     * directory where images are stored
+     */
+    private final static String IMAGE_DIR = "/image/";
+
+    private JColorChooser tcc;
+    /**
      * Label containing message to user
      */
     private JLabel message;
@@ -40,7 +40,6 @@ public class ConnectFive extends JFrame {
 
     // player1 is true, player2 is false
     private boolean turn = true;
-    private String IMAGE_DIR;
 
     /**
      * Constructor that initializes and adds all the components of the frame
@@ -94,9 +93,8 @@ public class ConnectFive extends JFrame {
     private JToolBar toolBar() {
         JToolBar toolBar = new JToolBar("Connect5");
         JButton button = new JButton(createImageIcon("play.png"));
-        //button.setIcon(createImageIcon("play.png"));
-        JButton button1 = new JButton(createImageIcon("wifi.png"));
-        JButton button2 = new JButton(createImageIcon("play.png"));
+        JButton button1 = new JButton(createImageIcon("wifi-green.png"));
+        JButton button2 = new JButton(createImageIcon("paint.png"));
         //button.addActionListener();
         button.setToolTipText("Play new Battle Royal");
         button.setFocusPainted(false);
@@ -106,18 +104,10 @@ public class ConnectFive extends JFrame {
         return toolBar;
     }
 
-
-    private ImageIcon createImageIcon(String filename) {
-        URL imageURL = getClass().getResource(IMAGE_DIR + filename);
-        if (imageURL != null) {
-            return new ImageIcon(imageURL);
-        }
-        return null;
-    }
-
     /**
      * creates the buttons, and adds the other panels to create
      * the overall GUI of the connect 5 game.
+     *
      * @param size the size of the board to be played
      */
     public void createGUI(int size) {
@@ -132,7 +122,7 @@ public class ConnectFive extends JFrame {
                 message.setText((e.getSource() == largeBoard ? "15" : "9"));
                 if (e.getSource() == largeBoard) {
                     ans = JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
-                    switch (ans){
+                    switch (ans) {
                         case NO_OPTION:
 
                         case YES_OPTION:
@@ -172,8 +162,6 @@ public class ConnectFive extends JFrame {
 //        getContentPane().add(statusPanel(), BorderLayout.SOUTH);
 
 
-
-
         // Handler for user input when placing a disc on the grid.
         boardPanel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
@@ -189,43 +177,49 @@ public class ConnectFive extends JFrame {
         });
     }
 
+    private void colorChooser() {
+        tcc = new JColorChooser(Color.RED);
+        tcc.getUI();
+    }
+
     /**
      * adds disc to the board and checks which player placed it
      *
-     * @param x  the x-coordinate from pixels
-     * @param y  the y-coordinate from pixels
+     * @param x the x-coordinate from pixels
+     * @param y the y-coordinate from pixels
      */
     private void passCoordinates(int x, int y) {
-            try {
+        try {
 
-                if (turn) {
-                    message.setText("Player 2's turn");
-                    boardPanel.getBoard().addDisc(x - 1, y - 1, 1);
-                    turn = false;
-                } else {
-                    message.setText("Player 1's turn");
-                    boardPanel.getBoard().addDisc(x - 1, y - 1, 2);
-                    turn = true;
-                }
-            } catch (PlayerWonException ex1) {
-                if (turn) {
-                    boardPanel.setVisible(false);
-                    message.setText("PLAYER 1 IS THE WINNER!");
-                } else {
-                    message.setText("PLAYER 2 IS THE WINNER");
-                    boardPanel.setVisible(false);
-                }
-            } catch (InValidDiskPositionException ex1) {
-                message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
-
-            } catch (Exception ex1) {
-                System.out.println("ITS A TIE");
+            if (turn) {
+                message.setText("Player 2's turn");
+                boardPanel.getBoard().addDisc(x - 1, y - 1, 1);
+                turn = false;
+            } else {
+                message.setText("Player 1's turn");
+                boardPanel.getBoard().addDisc(x - 1, y - 1, 2);
+                turn = true;
             }
+        } catch (PlayerWonException ex1) {
+            if (turn) {
+                boardPanel.setVisible(false);
+                message.setText("PLAYER 1 IS THE WINNER!");
+            } else {
+                message.setText("PLAYER 2 IS THE WINNER");
+                boardPanel.setVisible(false);
+            }
+        } catch (InValidDiskPositionException ex1) {
+            message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
+
+        } catch (Exception ex1) {
+            System.out.println("Something else went wrong");
+        }
     }
 
     /**
      * takes the pixels in the window and divides it by board size
      * to return the coordinate of each square in the board grid
+     *
      * @param x
      * @return int coordinate of the square that was clicked on the board
      */
@@ -242,6 +236,7 @@ public class ConnectFive extends JFrame {
 
     /**
      * creates the board panel that displays the current game
+     *
      * @param size
      * @return a panel that can be added to the window
      */
@@ -254,6 +249,7 @@ public class ConnectFive extends JFrame {
 
     /**
      * Creates a panel that displays a text status about the game
+     *
      * @return JPanel to be added to a window
      */
     private JPanel statusPanel() {
@@ -266,6 +262,14 @@ public class ConnectFive extends JFrame {
         statusPanel.add(message);
 
         return statusPanel;
+    }
+
+    private ImageIcon createImageIcon(String filename) {
+        URL imageURL = getClass().getResource(IMAGE_DIR + filename);
+        if (imageURL != null) {
+            return new ImageIcon(imageURL);
+        }
+        return null;
     }
 
     /**
