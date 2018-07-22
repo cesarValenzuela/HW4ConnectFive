@@ -10,11 +10,6 @@ public class MedCompAI extends CompPlayer {
         return coordinates;
     }
 
-    public boolean remainingMoves(Board board) {
-        return board.isBoardFull();
-    }
-
-
     public int minimax(Board board, int depth, boolean isMax) {
         int best = 0;
         if (isMax) {
@@ -22,7 +17,7 @@ public class MedCompAI extends CompPlayer {
 
             for (int i = 0; i < board.size(); i++) {
                 for (int j = 0; j < board.size(); j++) {
-                    if (board.getTiles(i, j) == null) { // if board [i][j] == empty
+                    if (board.getTiles(i, j) == null) {
                         // make the move
                         try {
                             board.addDisc(i, j, 2);
