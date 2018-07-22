@@ -185,20 +185,15 @@ public class ConnectFive extends JFrame {
             }
         });
         JButton paintButton = new JButton(createImageIcon("paint30.png"));
-        paintButton.addActionListener(e -> {
-            color = JColorChooser.showDialog(this, "pick", Color.ORANGE);
-            if (color == null) {
-                color = Color.RED;
-            } else{
-                boardPanel.setColorP1(color);
-            }
-        });
+        paintButton.addActionListener(e -> { colorChooser(); });
 
         JButton easyButton = new JButton(createImageIcon("easy30.png"));
         JButton mediumButton = new JButton(createImageIcon("medium30.png"));
 
-        playButton.setToolTipText("Play new Battle Royal");
+        playButton.setToolTipText("Play a new game.");
         playButton.setFocusPainted(false);
+
+
         toolBar.add(playButton);
         toolBar.add(paintButton);
         toolBar.add(easyButton);
@@ -237,8 +232,12 @@ public class ConnectFive extends JFrame {
     }
 
     private void colorChooser() {
-        tcc = new JColorChooser(Color.RED);
-        tcc.getUI();
+        color = JColorChooser.showDialog(this, "pick", Color.ORANGE);
+        if (color == null) {
+            color = Color.RED;
+        } else{
+            boardPanel.setColorP1(color);
+        }
     }
 
     /**
