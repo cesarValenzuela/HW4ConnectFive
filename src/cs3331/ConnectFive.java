@@ -116,8 +116,31 @@ public class ConnectFive extends JFrame {
     /**
      * creates the buttons, and adds the other panels to create
      * the overall GUI of the connect 5 game.
-     * @param size the size of the board to be played
+     * the size of the board to be played
      */
+    public void buttonActionListener(JButton largeBoard, JButton button ){
+        button.addActionListener(e -> {
+            int ans;
+            message.setText((e.getSource() == largeBoard ? "15" : "9"));
+            Sound.playAlertSound();
+            if (e.getSource() == largeBoard) {
+                ans = JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
+                switch (ans){
+                    case NO_OPTION:
+
+                    case YES_OPTION:
+                        this.dispose();
+                        new ConnectFive(15);
+                }
+
+            } else {
+                JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
+                this.dispose();
+                new ConnectFive(9);
+
+            }
+        });
+    }
     public void createGUI(int size) {
         //adding buttons (top)
         JPanel boardSizePanel = new JPanel(new FlowLayout());
@@ -126,27 +149,7 @@ public class ConnectFive extends JFrame {
         //ATTENTION THIS IS NOT WORKING IF NO IS CLICKED IT CRATES A NEW BOARD, ALSO CANCEL DOES NOT WORK SOME TIMES
         for (JButton button : new JButton[]{largeBoard, smallBoard}) {
             button.setFocusPainted(false);
-            button.addActionListener(e -> {
-                int ans;
-                message.setText((e.getSource() == largeBoard ? "15" : "9"));
-                Sound.playAlertSound();
-                if (e.getSource() == largeBoard) {
-                    ans = JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
-                    switch (ans){
-                        case NO_OPTION:
-
-                        case YES_OPTION:
-                            this.dispose();
-                            new ConnectFive(15);
-                    }
-
-                } else {
-                    JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
-                    this.dispose();
-                    new ConnectFive(9);
-
-                }
-            });
+            buttonActionListener(largeBoard, button);
             boardSizePanel.add(button);
         }
 
@@ -177,13 +180,16 @@ public class ConnectFive extends JFrame {
         // Handler for user input when placing a disc on the grid.
         boardPanel.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
+                if(e.getX()>25 && e.getY()>25 && e.getX()<675 && e.getY()<675) { // blocks user of clicking outside box
+                    int x = locateXY(e.getX());
+                    int y = locateXY(e.getY());
 
-                int x = locateXY(e.getX());
-                int y = locateXY(e.getY());
-                message.setText("X: " + x + " " + "Y: " + y);
-               // Sound.playTileSound();
-                passCoordinates(x, y);
-                repaint();
+                    message.setText("X: " + x + " " + "Y: " + y);
+
+                    // Sound.playTileSound();
+                    passCoordinates(x, y);
+                    repaint();
+                }
 
             }//end mouse pressed
         });
@@ -199,11 +205,11 @@ public class ConnectFive extends JFrame {
             try {
 
                 if (turn) {
-                    message.setText("Player 2's turn");
+                    message.setText("Player's 2 Turn");
                     boardPanel.getBoard().addDisc(x - 1, y - 1, 1);
                     turn = false;
                 } else {
-                    message.setText("Player 1's turn");
+                    message.setText("Player's 1 Turn");
                     boardPanel.getBoard().addDisc(x - 1, y - 1, 2);
                     turn = true;
                 }
@@ -254,7 +260,7 @@ public class ConnectFive extends JFrame {
     private BoardPanel boardPan(int size) {
 
         boardPanel = new BoardPanel(new Board(size));
-        boardPanel.setPreferredSize(new Dimension(725, 725));
+        boardPanel.setPreferredSize(new Dimension(720, 720));
         return boardPanel;
     }
 
