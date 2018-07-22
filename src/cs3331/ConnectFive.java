@@ -20,7 +20,6 @@ import static javax.swing.JOptionPane.YES_OPTION;
  *
  * @author Edgar Padilla
  */
-@SuppressWarnings("serial")
 public class ConnectFive extends JFrame {
 
     /**
@@ -29,18 +28,9 @@ public class ConnectFive extends JFrame {
     private final static String IMAGE_DIR = "/image/";
 
     private JColorChooser tcc;
-    /**
-     * Label containing message to user
-     */
     private JLabel message;
-    /**
-     * Panel for the board to be displayed on the GUI
-     * frame.
-     */
     private BoardPanel boardPanel;
-
     private int squareSize = 15;
-
     private Color color;
 
     // player1 is true, player2 is false
@@ -164,8 +154,6 @@ public class ConnectFive extends JFrame {
         JToolBar toolBar = new JToolBar("Connect5");
 
         JButton playButton = new JButton(createImageIcon("play30.png"));
-
-        //Dialog to start a new game
         playButton.addActionListener(e -> {
             Object[] options = {"15x15", "9x9"};
             int n = JOptionPane.showOptionDialog(this,
@@ -184,6 +172,7 @@ public class ConnectFive extends JFrame {
 
             }
         });
+
         JButton paintButton = new JButton(createImageIcon("paint30.png"));
         paintButton.addActionListener(e -> { colorChooser(); });
 
@@ -192,6 +181,11 @@ public class ConnectFive extends JFrame {
 
         playButton.setToolTipText("Play a new game.");
         playButton.setFocusPainted(false);
+
+        paintButton.setToolTipText("Customize Disc Colors");
+
+        easyButton.setToolTipText("Play against Easy Computer");
+        mediumButton.setToolTipText("Play against Medium Computer");
 
 
         toolBar.add(playButton);
@@ -232,6 +226,8 @@ public class ConnectFive extends JFrame {
     }
 
     private void colorChooser() {
+
+
         color = JColorChooser.showDialog(this, "pick", Color.ORANGE);
         if (color == null) {
             color = Color.RED;
