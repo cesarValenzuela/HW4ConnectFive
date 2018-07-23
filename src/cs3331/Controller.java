@@ -36,7 +36,35 @@ public class Controller {
         gui.addPaintHelper2Listener(new PaintHelper2Listener());
     }
 
-    //private void
+    private void loopDeLoop(int x, int y){
+        try {
+
+            if (gui.isTurn()) {
+                gui.getMessage().setText("Player 2's turn");
+                gui.getBoardPanel().getBoard().addDisc(x - 1, y - 1, 1);
+                gui.setTurn(false);
+            } else {
+                gui.getMessage().setText("Player 1's turn");
+                gui.getBoardPanel().getBoard().addDisc(x - 1, y - 1, 2);
+                gui.setTurn(true);
+            }
+        } catch (InValidDiskPositionException ex) {
+            gui.getMessage().setText("INVALID PLACEMENT");
+            Sound.playInvalidTileSound();
+        } catch (Exception ex1) {
+            System.out.println("TIE");
+        }
+        if (gui.getBoardPanel().getBoard().getBoardWon()) {
+            if (gui.getBoardPanel().getBoard().getWinner() == 1) {
+                gui.getMessage().setText("PLAYER 1 WINS");
+                gui.getBoardPanel().setVisible(false);
+            } else {
+                gui.getMessage().setText("PLAYER 2 WINS");
+                gui.getBoardPanel().setVisible(false);
+            }
+            Sound.playWinSound();
+        }
+    }
 
     /**
      * Action Listener for the Play Button on the Tool Bar
@@ -107,7 +135,7 @@ public class Controller {
             int x = gui.locateXY(e.getX());
             int y = gui.locateXY(e.getY());
             Sound.playTileSound();
-            gui.passCoordinates(x, y);
+            loopDeLoop(x, y);
             gui.repaint();
         }
     }
