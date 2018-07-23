@@ -9,6 +9,7 @@ public class Board {
     private Square[][] tiles;
     private boolean[][] isFilled;
     private int counter = 0;
+    private boolean boardWon=false;
 
     /**
      * Defines the size of the board
@@ -33,19 +34,22 @@ public class Board {
      * @param x x coordinate of where the disc needs to be placed.
      * @param y y coordinate of where the disc needs to be placed.
      */
-    public void addDisc(int x, int y, int player) throws InValidDiskPositionException, PlayerWonException {
+    public void addDisc(int x, int y, int player) throws InValidDiskPositionException {
         if (isValidPosition(x, y)) {
 
             tiles[y][x] = new Square(x, y, player);
             isFilled[y][x] = true;
             counter++;
             if (checkForWin(tiles[y][x])) {
-                throw new PlayerWonException();
+                boardWon=true;
             }
 
         } else {
             throw new InValidDiskPositionException();
         }
+    }
+    public boolean getBoardWon(){
+        return boardWon;
     }
 
     /**
@@ -120,6 +124,24 @@ public class Board {
             isFilled[y][x]=false;
 
         }
+    }
+
+    /**
+     * THis is used for ai to have a copy of the current board
+     * @return
+     */
+    public Board createDupilicateBoard(){
+        Board newBoard= new Board(this.size);
+        try {
+            for (int i = 0; i < this.size; i++) {
+                for (int j = 0; j < this.size; j++) {
+                    newBoard.addDisc(j, i, this.tiles[j][j].getPlayer());
+                }
+            }
+        }catch (Exception e){
+            System.out.println("Something went wrong with duplicate board fix it quick");
+        }
+        return newBoard;
     }
 
 
