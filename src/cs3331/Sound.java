@@ -25,7 +25,7 @@ public class Sound{
     public static void playAlertSound(){
         playSound("src\\Sound\\alertSound.wav");
     }
-    private static void playSound(String fileName){
+    protected static void playSound(String fileName){
         try{
             Clip audioClip=AudioSystem.getClip();
             audioClip.open(AudioSystem.getAudioInputStream(new File(fileName)));

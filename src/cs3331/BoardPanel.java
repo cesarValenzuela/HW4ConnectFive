@@ -20,6 +20,7 @@ public class BoardPanel extends JPanel {
     private Board board;
     private int grid; // size of grid
 
+
     private Color colorP1;
     private Color colorP2;
 
