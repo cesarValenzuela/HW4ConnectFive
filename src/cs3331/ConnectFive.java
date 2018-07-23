@@ -105,7 +105,7 @@ public class ConnectFive extends JFrame {
 
         JMenuItem menuItem = new JMenuItem("New Game");
         menuItem.setIcon(createImageIcon("play.png"));
-        
+
 
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
                 ActionEvent.ALT_MASK));
