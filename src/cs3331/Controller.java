@@ -2,10 +2,7 @@ package cs3331;
 
 import javax.naming.ldap.Control;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 import static javax.swing.JOptionPane.NO_OPTION;
 
@@ -32,6 +29,7 @@ public class Controller {
         gui.addEasyListener(new EasyListener());
         gui.addMediumListener(new MediumListener());
         gui.addMouseListener(new ClickAdapter());
+        gui.addMenuNGListener(new MenuListener());
 
     }
 
@@ -86,7 +84,16 @@ public class Controller {
         }
     }
 
-    //class
+    class MenuListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            //new game
+            gui.getMenuItem().setMnemonic(KeyEvent.VK_N);
+            gui.getMenuItem().setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+                    ActionEvent.ALT_MASK));
+
+        }
+    }
 
     public static void main(String[] args) {
         Board board = new Board(15);

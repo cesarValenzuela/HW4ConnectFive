@@ -103,10 +103,9 @@ public class ConnectFive extends JFrame {
 
         menuBar.add(menu);
 
-        JMenuItem menuItem = new JMenuItem("New Game", KeyEvent.VK_N);
+        JMenuItem menuItem = new JMenuItem("New Game");
         menuItem.setIcon(createImageIcon("play.png"));
-
-        //menuItem.setIcon();
+        
 
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
                 ActionEvent.ALT_MASK));
@@ -264,6 +263,10 @@ public class ConnectFive extends JFrame {
             return new ImageIcon(imageURL);
         }
         return null;
+    }
+
+    public JMenuItem getMenuItem() {
+        return menuItem;
     }
 
     /**
