@@ -35,8 +35,6 @@ public class ConnectFive extends JFrame {
      */
     private final static String IMAGE_DIR = "/image/";
 
-    private JColorChooser tcc;
-
     private JLabel message;
     private BoardPanel boardPanel;
     private int squareSize = 15;
