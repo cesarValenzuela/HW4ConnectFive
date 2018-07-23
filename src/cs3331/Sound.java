@@ -12,16 +12,30 @@ public class Sound{
     /**
      *
      */
-    public static void playSound(){
+    public static void playWinSound(){
+        playSound("src\\Sound\\winSound.wav");
+    }
+    public static void playTileSound(){
+        playSound("src\\Sound\\click (1).wav");
+    }
+    public static void playInvalidTileSound(){
+        playSound("src\\Sound\\errorSound.wav");
+    }
+
+    public static void playAlertSound(){
+        playSound("src\\Sound\\alertSound.wav");
+    }
+    protected static void playSound(String fileName){
         try{
             Clip audioClip=AudioSystem.getClip();
-            audioClip.open(AudioSystem.getAudioInputStream(new File("src\\Sound\\click (1).wav")));
+            audioClip.open(AudioSystem.getAudioInputStream(new File(fileName)));
             audioClip.start();
             Thread.sleep(audioClip.getMicrosecondLength()/1000);
         }catch(Exception e){
             System.out.println("Sound Problem");
         }
     }
+
 
 
 }
