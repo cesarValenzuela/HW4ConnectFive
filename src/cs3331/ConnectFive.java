@@ -249,43 +249,6 @@ public class ConnectFive extends JFrame {
         repaint();
     }
 
-    /**
-     * adds disc to the board and checks which player placed it
-     *
-     * @param x the x-coordinate from pixels
-     * @param y the y-coordinate from pixels
-     */
-//    protected void passCoordinates(int x, int y) {
-//        try {
-//            if (turn) {
-//                message.setText("Player 2's turn");
-//                boardPanel.getBoard().addDisc(x - 1, y - 1, 1);
-//                turn = false;
-//            } else {
-//                message.setText("Player 1's turn");
-//                boardPanel.getBoard().addDisc(x - 1, y - 1, 2);
-//                turn = true;
-//            }
-//
-//        } catch (InValidDiskPositionException ex1) {
-//            message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
-//            Sound.playInvalidTileSound();
-//
-//        } catch (Exception ex1) {
-//            System.out.println("ITS A TIE");
-//
-//        }
-//        if (boardPanel.getBoard().getBoardWon()) {
-//            if (boardPanel.getBoard().getWinner() == 1) {
-//                message.setText("PLAYER 1 WINS");
-//                boardPanel.setVisible(false);
-//            } else {
-//                message.setText("PLAYER 2 WINS");
-//                boardPanel.setVisible(false);
-//            }
-//            Sound.playWinSound();
-//        }
-//    }
 
     /**
      * takes the pixels in the window and divides it by board size

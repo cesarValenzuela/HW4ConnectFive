@@ -1,6 +1,7 @@
 package cs3331;
 
 public class MedCompAI extends CompPlayer {
+
     @Override
     // need to make this medium difficulty
     public int[] getComputerCoordinates() {

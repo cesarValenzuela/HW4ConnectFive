@@ -36,9 +36,9 @@ public class Controller {
         gui.addPaintHelper2Listener(new PaintHelper2Listener());
     }
 
-    private void loopDeLoop(int x, int y){
+    private void HumanVHuman(int x, int y){
         try {
-
+            // player 1 goes first
             if (gui.isTurn()) {
                 gui.getMessage().setText("Player 2's turn");
                 gui.getBoardPanel().getBoard().addDisc(x - 1, y - 1, 1);
@@ -54,6 +54,7 @@ public class Controller {
         } catch (Exception ex1) {
             System.out.println("TIE");
         }
+        // checking which player won
         if (gui.getBoardPanel().getBoard().getBoardWon()) {
             if (gui.getBoardPanel().getBoard().getWinner() == 1) {
                 gui.getMessage().setText("PLAYER 1 WINS");
@@ -135,7 +136,7 @@ public class Controller {
             int x = gui.locateXY(e.getX());
             int y = gui.locateXY(e.getY());
             Sound.playTileSound();
-            loopDeLoop(x, y);
+            HumanVHuman(x, y);
             gui.repaint();
         }
     }
