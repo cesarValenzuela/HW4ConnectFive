@@ -1,5 +1,6 @@
 package cs3331;
 
+import javax.naming.InvalidNameException;
 import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.awt.*;
@@ -36,17 +37,17 @@ public class Controller {
         gui.addPaintHelper2Listener(new PaintHelper2Listener());
     }
 
-    private void loopDeLoop(int x, int y){
+    private void HumanVHuman(int x, int y) {
         try {
-
+            // player 1 goes first
             if (gui.isTurn()) {
                 gui.getMessage().setText("Player 2's turn");
-                gui.getBoardPanel().getP1().setMove(x,y);
+                gui.getBoardPanel().getP1().setMove(x, y);
                 gui.getBoardPanel().getBoard().addDisc(gui.getBoardPanel().getP1().currX - 1, gui.getBoardPanel().getP1().currY - 1, 1);
                 gui.setTurn(false);
             } else {
                 gui.getMessage().setText("Player 1's turn");
-                gui.getBoardPanel().getP2().setMove(x,y);
+                gui.getBoardPanel().getP2().setMove(x, y);
                 gui.getBoardPanel().getBoard().addDisc(gui.getBoardPanel().getP2().currX - 1, gui.getBoardPanel().getP2().currY - 1, 2);
                 gui.setTurn(true);
             }
@@ -56,6 +57,34 @@ public class Controller {
         } catch (Exception ex1) {
             System.out.println("TIE");
         }
+        // checking which player won
+        winHelper();
+    }
+
+    private void HumanVsAI(int x, int y) {
+        try {
+
+            gui.getMessage().setText("Player 2's turn");
+            System.out.println("HUMAN MOVE");
+            gui.getBoardPanel().getP1().setMove(x, y);
+            gui.getBoardPanel().getBoard().addDisc(gui.getBoardPanel().getP1().currX - 1, gui.getBoardPanel().getP1().currY - 1, 1);
+
+            //AI
+            System.out.println("AI MOVE");
+            gui.getBoardPanel().getP2().setMove(x,y);
+            gui.getBoardPanel().getBoard().addDisc(gui.getBoardPanel().getP2().currX, gui.getBoardPanel().getP2().currY,2);
+
+        } catch (InValidDiskPositionException ex1) {
+            gui.getMessage().setText("INVALID PLACEMENT");
+            Sound.playInvalidTileSound();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("oops tie");
+        }
+        winHelper();
+    }
+
+    private void winHelper() {
         if (gui.getBoardPanel().getBoard().getBoardWon()) {
             if (gui.getBoardPanel().getBoard().getWinner() == 1) {
                 gui.getMessage().setText("PLAYER 1 WINS");
@@ -67,6 +96,7 @@ public class Controller {
             Sound.playWinSound();
         }
     }
+
 
     /**
      * Action Listener for the Play Button on the Tool Bar
@@ -116,8 +146,10 @@ public class Controller {
      */
     class EasyListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            System.out.println("EASY PEASY");
+            System.out.println("ez");
             gui.getBoardPanel().setP2('e');
+            //HumanVsAI();
+
         }
     }
 
@@ -139,7 +171,12 @@ public class Controller {
             int x = gui.locateXY(e.getX());
             int y = gui.locateXY(e.getY());
             Sound.playTileSound();
-            loopDeLoop(x, y);
+            if (gui.getBoardPanel().getP2().getIsReal()){
+                HumanVHuman(x,y);
+            } else {
+                HumanVsAI(x,y);
+            }
+
             gui.repaint();
         }
     }
@@ -163,7 +200,7 @@ public class Controller {
     }
 
 
-    public static void main(String[] args) {
+    public static void main (String[]args){
         Board board = new Board(15);
         ConnectFive gui = new ConnectFive();
         new Controller(board, gui);

@@ -8,6 +8,10 @@ import java.awt.*;
 public abstract class Player {
     protected int currX;
     protected int currY;
+    protected boolean isReal;
+    public boolean getIsReal(){
+        return isReal;
+    }
     private Color tileColor;
     private int playerName;//will be useful for the future
     private char symbol;// should be 1 or 2 will be useful for the future
