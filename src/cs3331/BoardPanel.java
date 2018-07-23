@@ -20,8 +20,9 @@ public class BoardPanel extends JPanel {
     private Board board;
     private int grid; // size of grid
 
-
-    private Color colorP1;
+    private Player p1;
+    private Player p2;
+    //private Color p1.;
     private Color colorP2;
 
     /**
@@ -29,12 +30,17 @@ public class BoardPanel extends JPanel {
      */
     public BoardPanel(Board board) {
         super(true);
+        p1=new Human(1,'1');
+        p2=new EasyCompAI(2,'2');
+
         this.board = board;
         grid = this.board.size();
         setOpaque(true);
         setBackground(Color.CYAN);
-        setColorP1(Color.RED);
-        setColorP2(Color.BLACK);
+        //setp1.(Color.RED);
+        //setColorP2(Color.BLACK);
+        p1.setTileColor(Color.RED);
+        p2.setTileColor(Color.BLACK);
     }
 
     public int setSize(int grid) { // set size 9 or 15
@@ -49,19 +55,19 @@ public class BoardPanel extends JPanel {
     }
 
     public Color getColorP1() {
-        return colorP1;
+        return p1.getTileColor();
     }
 
-    public void setColorP1(Color colorP1) {
-        this.colorP1 = colorP1;
+    public void setColorP1(Color color) {
+        p1.setTileColor(color);
     }
 
     public Color getColorP2() {
-        return colorP2;
+        return p2.getTileColor();
     }
 
     public void setColorP2(Color colorP2) {
-        this.colorP2 = colorP2;
+        p2.setTileColor(colorP2);
     }
 
     public Board getBoard() {
@@ -109,11 +115,11 @@ public class BoardPanel extends JPanel {
 
                 if (board.getTiles(i, j) != null && board.getTiles(i, j).getPlayer() == 1) {
                     Ellipse2D.Double circle = new Ellipse2D.Double(i * temp + 25, j * temp + 25, discPxl, discPxl);
-                    g22d.setPaint(colorP1);
+                    g22d.setPaint(p1.getTileColor());
                     g22d.fill(circle);
                 } else if (board.getTiles(i, j) != null && board.getTiles(i, j).getPlayer() == 2) {
                     Ellipse2D.Double circle = new Ellipse2D.Double(i * temp + 25, j * temp + 25, discPxl, discPxl);
-                    g22d.setPaint(colorP2);
+                    g22d.setPaint(p2.getTileColor());
                     g22d.fill(circle);
                 }
             }

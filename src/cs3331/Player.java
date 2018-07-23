@@ -1,9 +1,12 @@
 package cs3331;
 
+import java.awt.*;
+
 /**
  * @author Andrea Fernanda Torres
  */
-public class Player {
+public abstract class Player {
+    private Color tileColor;
     private int playerName;//will be useful for the future
     private char symbol;// should be 1 or 2 will be useful for the future
     private boolean isReal;// will be used later on once AI is implemented
@@ -16,6 +19,13 @@ public class Player {
 
     public char getSymbol() {
         return symbol;
+    }
+
+    public Color getTileColor(){
+        return tileColor;
+    }
+    public void setTileColor(Color tcolor){
+        this.tileColor=tcolor;
     }
 
     public int getPlayerName() {

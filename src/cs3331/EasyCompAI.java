@@ -1,7 +1,10 @@
 package cs3331;import java.util.Random;
 
-public class EasyCompAI extends CompPlayer {
-    @Override
+public class EasyCompAI extends Computer {
+    public EasyCompAI(int currPlayer, char symbol) {
+        super(currPlayer, symbol);
+    }
+
     public int[] getComputerCoordinates() {
         int[] coordinates=new int[2];
         coordinates[0]=(int)(Math.random()*15)+1;

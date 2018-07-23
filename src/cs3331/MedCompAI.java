@@ -1,7 +1,10 @@
 package cs3331;
 
-public class MedCompAI extends CompPlayer {
-    @Override
+public class MedCompAI extends Computer {
+    public MedCompAI(int currPlayer, char symbol) {
+        super(currPlayer, symbol);
+    }
+
     // need to make this medium difficulty
     public int[] getComputerCoordinates() {
         int[] coordinates = new int[2];
