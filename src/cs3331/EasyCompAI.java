@@ -7,6 +7,11 @@ public class EasyCompAI extends Computer {
 
     @Override
     public void setMove(int x, int y) {
+
+    }
+
+    @Override
+    public void setMove() {
         int[] coordinates= getComputerCoordinates();
         currY=coordinates[0];
         currX=coordinates[1];

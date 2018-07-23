@@ -6,13 +6,18 @@ public class MedCompAI extends Computer {
     }
 
     @Override
-    public void setMove(int x, int y) {
+    public void setMove() {
 
     }
 
     @Override
-    public void setMove() {
-        int[] point=getComputerCoordinates();
+    public void setMove(int x, int y) {
+
+    }
+
+
+    public void setMove(Board board) {
+        int[] point=makeBestMove(board);
         currY=point[0];
         currX=point[1];
     }
@@ -23,51 +28,50 @@ public class MedCompAI extends Computer {
     }
 
     // need to make this medium difficulty
-    public int[] getComputerCoordinates() {
-        int[] coordinates = new int[2];
-        coordinates[0] = (int) (Math.random() * 15) + 1;
-        coordinates[1] = (int) (Math.random() * 15) + 1;
+    public int[] getComputerCoordinates(Board board) {
+        int[] coordinates = makeBestMove(board);//brian's supercool code
         return coordinates;
     }
-
     public int minimax(Board board, int depth, boolean isMax) {
+        Board temp = board.createDupilicateBoard();
         int best = 0;
-        if (isMax) {
-            best = -1000;
+        if(temp.isBoardFull() == true)
+            return 0;
 
-            for (int i = 0; i < board.size(); i++) {
-                for (int j = 0; j < board.size(); j++) {
-                    if (board.getTiles(i, j) == null) {
+        if (isMax) {
+            best = -100;
+            for (int i = 0; i < temp.size(); i++) {
+                for (int j = 0; j < temp.size(); j++) {
+                    if (temp.getTiles(i, j) == null) {
                         // make the move
                         try {
-                            board.addDisc(i, j, 2);
+                            temp.addDisc(i, j, 2);
                         } catch (InValidDiskPositionException e) {
                             e.printStackTrace();
                         }
-
                         //call minimax Recursively and choose the max values
-                        best = Math.max(best, minimax(board, depth + 1, !isMax));
+                        best = Math.max(best, minimax(temp, depth + 1, !isMax));
 
                         // undo the move
-                        board.removeTile(i,j);
+                        temp.removeTile(i,j);
                     }
                 }
             }
         } else {
-            best = 1000;
-            for (int i = 0; i < board.size(); i++) {
-                for (int j = 0; j < board.size(); j++) {
-                    if (board.getTiles(i, j) == null) { // if board [i][j] == empty
+            best = 100;
+            for (int i = 0; i < temp.size(); i++) {
+                for (int j = 0; j < temp.size(); j++) {
+                    if (temp.getTiles(i, j) == null) { // if board [i][j] == empty
                         // make the move
                         try {
-                            board.addDisc(i, j, 2);
+                            temp.addDisc(i, j, 2);
                         } catch (InValidDiskPositionException e) {
                             e.printStackTrace();
                         }
                         //call minimax Recursively and choose the max values
-                        best = Math.min(best, minimax(board, depth + 1, !isMax));
+                        best = Math.min(best, minimax(temp, depth + 1, !isMax));
                         // undo the move
-                        board.removeTile(i,j);
+                        temp.removeTile(i,j);
                     }
                 }
             }
@@ -78,27 +82,28 @@ public class MedCompAI extends Computer {
     }
 
     public int[] makeBestMove(Board board) {
-        int bestVal = -1000;
+        Board temp = board.createDupilicateBoard();
+        int bestVal = -100;
         int[] coordinates = new int[2];
 
-        for (int i = 0; i < board.size(); i++) {
-            for (int j = 0; j < board.size(); j++) {
-                if (board.isValidPosition(i,j)) {
+        for (int x = 0; x < temp.size(); x++) {
+            for (int j = 0; j < temp.size(); j++) {
+                if (temp.isValidPosition(x,j)) {
 
                     // make the move
                     try {
-                        board.addDisc(i, j, 2);
+                        temp.addDisc(x, j, 2);
                     } catch (InValidDiskPositionException e) {
                         e.printStackTrace();
-                    } if (board.getBoardWon()) {
-                        int moveVal = minimax(board, 0, false);
+                    } if (temp.getBoardWon()) {
+                        int moveVal = minimax(temp, 0, false);
 
                         // undo
-                        board.removeTile(i,j);
+                        temp.removeTile(x,j);
 
                         // if val of current move is > best val then update
                         if (moveVal > bestVal) {
-                            coordinates[0] = i;
+                            coordinates[0] = x;
                             coordinates[1] = j;
                         }
                     }
@@ -107,6 +112,7 @@ public class MedCompAI extends Computer {
         }
         return coordinates;
     }
+
 }
 
 
