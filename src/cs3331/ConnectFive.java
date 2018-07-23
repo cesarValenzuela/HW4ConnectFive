@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.net.URL;
 
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -86,8 +85,6 @@ public class ConnectFive extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-
-
     /**
      * creates the buttons, and adds the other panels to create
      * the overall GUI of the connect 5 game.
@@ -120,57 +117,11 @@ public class ConnectFive extends JFrame {
         easyButton = new JButton(createImageIcon("easy30.png"));
         mediumButton = new JButton(createImageIcon("medium30.png"));
 
-
-//        playButton.addActionListener(e -> {
-//            Object[] options = {"15x15", "9x9"};
-//            Object[] yesOrNo = {"Yes" , "No"};
-//            int n = JOptionPane.showOptionDialog(this,
-//                    "pick a size", "New Game",
-//                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-//                    null, options, options[1]);
-//            // 15 x 15
-//            if (n == JOptionPane.YES_OPTION) {
-//                int comfirm = JOptionPane.showOptionDialog(this, "Start NEW GAME?", "comfirm",
-//                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-//                        null, yesOrNo, yesOrNo[1]);
-//                if(comfirm == JOptionPane.YES_OPTION) {
-//                    this.dispose();
-//                    new ConnectFive(15);
-//                }
-//            // 9 x 9
-//            } else if (n == NO_OPTION) {
-//                int comfirm = JOptionPane.showOptionDialog(this, "Start NEW GAME?", "comfirm",
-//                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-//                        null, yesOrNo, yesOrNo[1]);
-//                if(comfirm == JOptionPane.YES_OPTION) {
-//                    this.dispose();
-//                    new ConnectFive(9);
-//                }
-//            } else {
-//
-//
-//
-//        JPanel jPanel1 = new JPanel();
-//        jPanel1.setLayout(new BorderLayout());
-//        jPanel1.add(menuBar(), BorderLayout.NORTH);
-//        jPanel1.add(toolBar(), BorderLayout.SOUTH);
-//        getContentPane().add(jPanel, BorderLayout.CENTER);
-//        getContentPane().add(jPanel1, BorderLayout.NORTH);
-//
-//            }
-//        });
-
-
-
         playButton.setToolTipText("Play a new game.");
         playButton.setFocusPainted(false);
-
-
         paintButton.setToolTipText("Customize Disc Colors");
-
         easyButton.setToolTipText("Play against Easy Computer");
         mediumButton.setToolTipText("Play against Medium Computer");
-
 
 
         toolBar.add(playButton);
@@ -184,24 +135,28 @@ public class ConnectFive extends JFrame {
     void addEasyListener(ActionListener eal) {
         easyButton.addActionListener(eal);
     }
+
     void addMediumListener(ActionListener mal) {
         mediumButton.addActionListener(mal);
     }
-    void addPlayListener(ActionListener pal){
+
+    void addPlayListener(ActionListener pal) {
         playButton.addActionListener(pal);
     }
+
     void addPaintListener(ActionListener paintal) {
         paintButton.addActionListener(paintal);
     }
-    void addPaintHelperListener(ActionListener actionL){
+
+    void addPaintHelperListener(ActionListener actionL) {
         p1.addActionListener(actionL);
     }
-    void addPaintHelper2Listener(ActionListener aEvent){
+
+    void addPaintHelper2Listener(ActionListener aEvent) {
         p2.addActionListener(aEvent);
     }
 
-
-    public void addMouseListener(MouseListener e){
+    public void addMouseListener(MouseListener e) {
         boardPanel.addMouseListener(e);
 
     }
@@ -242,6 +197,7 @@ public class ConnectFive extends JFrame {
         boardPanel.setPreferredSize(new Dimension(725, 725));
         return boardPanel;
     }
+
     /**
      * Creates a panel that displays a text status about the game
      *
@@ -258,13 +214,14 @@ public class ConnectFive extends JFrame {
 
         return statusPanel;
     }
-    protected void colorChooser(){
+
+    protected void colorChooser() {
 
         //JDialog popUp=new JDialog(new JFrame(),"Testing","this is an example");
-        popup=new JPanel();
+        popup = new JPanel();
         //popup.setLayout(new BoxLayout(popup,BoxLayout.Y_AXIS));
-        frametmp=new JFrame("Color chooser");
-        JLabel text= new JLabel("Please Select Which Player to Chane tile");
+        frametmp = new JFrame("Color chooser");
+        JLabel text = new JLabel("Please Select Which Player to Chane tile");
 
         p1.setBackground(boardPanel.getColorP1());
         p2.setBackground(boardPanel.getColorP2());
@@ -273,7 +230,7 @@ public class ConnectFive extends JFrame {
         popup.add(p1);
         popup.add(p2);
         frametmp.add(popup);
-        frametmp.setSize(250,150);
+        frametmp.setSize(250, 150);
         frametmp.setVisible(true);
         frametmp.setResizable(false);
         frametmp.repaint();
@@ -285,10 +242,10 @@ public class ConnectFive extends JFrame {
         color = JColorChooser.showDialog(this, "pick", Color.ORANGE);
         if (color == null) {
             color = Color.RED;
-        } else{
-            if(player=='1')
+        } else {
+            if (player == '1')
                 boardPanel.setColorP1(color);
-            if(player=='2')
+            if (player == '2')
                 boardPanel.setColorP2(color);
         }
         repaint();
@@ -301,34 +258,26 @@ public class ConnectFive extends JFrame {
      * @param y the y-coordinate from pixels
      */
     protected void passCoordinates(int x, int y) {
-            try {
-                if (turn) {
-                    message.setText("Player 2's turn");
-                    boardPanel.getBoard().addDisc(x - 1, y - 1, 1);
-                    turn = false;
-                } else {
-                    message.setText("Player 1's turn");
-                    boardPanel.getBoard().addDisc(x - 1, y - 1, 2);
-                    turn = true;
-                }
-        /*} catch (Exception ex1) {
+        try {
             if (turn) {
-                boardPanel.setVisible(false);
-                message.setText("PLAYER 1 IS THE WINNER!");
+                message.setText("Player 2's turn");
+                boardPanel.getBoard().addDisc(x - 1, y - 1, 1);
+                turn = false;
             } else {
-                message.setText("PLAYER 2 IS THE WINNER");
-                boardPanel.setVisible(false);
-            }*/
-
-            } catch (InValidDiskPositionException ex1) {
-                message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
-                Sound.playInvalidTileSound();
-
-            } catch (Exception ex1) {
-                System.out.println("ITS A TIE");
-
+                message.setText("Player 1's turn");
+                boardPanel.getBoard().addDisc(x - 1, y - 1, 2);
+                turn = true;
             }
-        if( boardPanel.getBoard().getBoardWon()) {
+
+        } catch (InValidDiskPositionException ex1) {
+            message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
+            Sound.playInvalidTileSound();
+
+        } catch (Exception ex1) {
+            System.out.println("ITS A TIE");
+
+        }
+        if (boardPanel.getBoard().getBoardWon()) {
             if (boardPanel.getBoard().getWinner() == 1) {
                 message.setText("PLAYER 1 WINS");
                 boardPanel.setVisible(false);
@@ -339,7 +288,7 @@ public class ConnectFive extends JFrame {
             Sound.playWinSound();
         }
     }
-    
+
     /**
      * takes the pixels in the window and divides it by board size
      * to return the coordinate of each square in the board grid
@@ -370,8 +319,8 @@ public class ConnectFive extends JFrame {
         return menuItem;
     }
 
-    public JPanel getPopup() {
-        return popup;
+    public JLabel getMessage() {
+        return message;
     }
 
     /**
