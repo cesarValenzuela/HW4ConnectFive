@@ -2,6 +2,8 @@ package cs3331;
 
 public class Human extends Player {
 
+    final boolean isReal = true;
+
     public Human(int currPlayer, char symbol) {
         super(currPlayer, symbol);
     }

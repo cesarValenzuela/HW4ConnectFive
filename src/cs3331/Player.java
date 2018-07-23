@@ -16,7 +16,7 @@ public abstract class Player {
     public Player(int currPlayer, char symbol) {
         this.playerName = currPlayer;
         this.symbol = symbol;
-        isReal = true;
+
     }
     public abstract void setMove(int x,int y);
     public abstract int[] getMove();
@@ -37,5 +37,9 @@ public abstract class Player {
     }
     public int getCurrX(){return currX;}
     public int getCurrY(){return currY;}
+
+    public boolean isReal() {
+        return isReal;
+    }
     //Eventually we will implement the AI stuff here or related to here that is why we have the irReal
 }
