@@ -7,6 +7,11 @@ public class MedCompAI extends Computer {
 
     @Override
     public void setMove(int x, int y) {
+
+    }
+
+    @Override
+    public void setMove() {
         int[] point=getComputerCoordinates();
         currY=point[0];
         currX=point[1];

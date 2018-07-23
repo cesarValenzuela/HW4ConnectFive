@@ -127,6 +127,7 @@ public class Controller {
     class MediumListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             System.out.println("MEDIUM");
+            gui.getBoardPanel().setP2('m');
         }
     }
 
