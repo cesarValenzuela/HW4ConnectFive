@@ -20,8 +20,8 @@ public class BoardPanel extends JPanel {
     private Board board;
     private int grid; // size of grid
 
-    private Color colorP1;
-    private Color colorP2;
+    private Color colorP1 = Color.RED;
+    private Color colorP2 = Color.BLACK;
 
     /**
      * Creates an instance of this panel for the discs board.

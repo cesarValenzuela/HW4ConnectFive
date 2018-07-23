@@ -1,13 +1,9 @@
 package cs3331;
 
-import com.sun.webkit.ColorChooser;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.net.URL;
 
 import static javax.swing.JOptionPane.NO_OPTION;
@@ -27,11 +23,17 @@ public class ConnectFive extends JFrame {
      */
     private final static String IMAGE_DIR = "/image/";
 
-    private JColorChooser tcc;
     private JLabel message;
     private BoardPanel boardPanel;
     private int squareSize = 15;
     private Color color;
+
+    private JButton playButton;
+    private JButton paintButton;
+    private JButton easyButton;
+    private JButton mediumButton;
+
+    private JMenuItem menuItem;
 
     // player1 is true, player2 is false
     private boolean turn = true;
@@ -73,32 +75,7 @@ public class ConnectFive extends JFrame {
     public void createGUI(int size) {
         //adding buttons (top)
         JPanel boardSizePanel = new JPanel(new FlowLayout());
-//        JButton largeBoard = new JButton("Board Size (15x15)");
-//        JButton smallBoard = new JButton("Board Size (9x9)");
-//        for (JButton button : new JButton[]{largeBoard, smallBoard}) {
-//            button.setFocusPainted(false);
-//            button.addActionListener(e -> {
-//                int ans;
-//                message.setText((e.getSource() == largeBoard ? "15" : "9"));
-//                if (e.getSource() == largeBoard) {
-//                    ans = JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
-//                    switch (ans) {
-//                        case NO_OPTION:
-//
-//                        case YES_OPTION:
-//                            this.dispose();
-//                            new ConnectFive(15);
-//                    }
-//
-//                } else {
-//                    JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
-//                    this.dispose();
-//                    new ConnectFive(9);
-//
-//                }
-//            });
-//            boardSizePanel.add(button);
-//        }
+
 
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new BorderLayout());
@@ -113,32 +90,22 @@ public class ConnectFive extends JFrame {
         getContentPane().add(jPanel, BorderLayout.CENTER);
         getContentPane().add(jPanel1, BorderLayout.NORTH);
 
-
-        // Handler for user input when placing a disc on the grid.
-        boardPanel.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-
-                int x = locateXY(e.getX());
-                int y = locateXY(e.getY());
-                message.setText("X: " + x + " " + "Y: " + y);
-                Sound.playSound();
-                passCoordinates(x, y);
-                repaint();
-
-            }//end mouse pressed
-        });
     }
 
     private JMenuBar menuBar() {
         JMenuBar menuBar = new JMenuBar();
 
         JMenu menu = new JMenu("Game");
+
         //when menu is open - pressing G triggers something
         menu.setMnemonic(KeyEvent.VK_G);
         menu.getAccessibleContext().setAccessibleDescription("Game Menu");
+
         menuBar.add(menu);
 
         JMenuItem menuItem = new JMenuItem("New Game", KeyEvent.VK_N);
+        menuItem.setIcon(createImageIcon("play.png"));
+
         //menuItem.setIcon();
 
         menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
@@ -153,31 +120,10 @@ public class ConnectFive extends JFrame {
     private JToolBar toolBar() {
         JToolBar toolBar = new JToolBar("Connect5");
 
-        JButton playButton = new JButton(createImageIcon("play30.png"));
-        playButton.addActionListener(e -> {
-            Object[] options = {"15x15", "9x9"};
-            int n = JOptionPane.showOptionDialog(this,
-                    "pick a size", "New Game",
-                    JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                    null, options, options[1]);
-            if (n == JOptionPane.YES_OPTION) {
-                //JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
-                this.dispose();
-                new ConnectFive(15);
-            } else if (n == NO_OPTION) {
-                //JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
-                this.dispose();
-                new ConnectFive(9);
-            } else {
-
-            }
-        });
-
-        JButton paintButton = new JButton(createImageIcon("paint30.png"));
-        paintButton.addActionListener(e -> { colorChooser(); });
-
-        JButton easyButton = new JButton(createImageIcon("easy30.png"));
-        JButton mediumButton = new JButton(createImageIcon("medium30.png"));
+        playButton = new JButton(createImageIcon("play30.png"));
+        paintButton = new JButton(createImageIcon("paint30.png"));
+        easyButton = new JButton(createImageIcon("easy30.png"));
+        mediumButton = new JButton(createImageIcon("medium30.png"));
 
         playButton.setToolTipText("Play a new game.");
         playButton.setFocusPainted(false);
@@ -195,6 +141,29 @@ public class ConnectFive extends JFrame {
         return toolBar;
     }
 
+    void addEasyListener(ActionListener eal) {
+        easyButton.addActionListener(eal);
+    }
+
+    void addMediumListener(ActionListener mal) {
+        mediumButton.addActionListener(mal);
+    }
+
+    void addPlayListener(ActionListener pal){
+        playButton.addActionListener(pal);
+    }
+
+    void addPaintListener(ActionListener paintal) {
+        paintButton.addActionListener(paintal);
+    }
+
+    public void addMouseListener(MouseListener e){
+        boardPanel.addMouseListener(e);
+    }
+
+    void addMenuNGListener(ActionListener mgal) {
+        menuItem.addActionListener(mgal);
+    }
     /**
      * creates the board panel that displays the current game
      *
@@ -225,7 +194,7 @@ public class ConnectFive extends JFrame {
         return statusPanel;
     }
 
-    private void colorChooser() {
+    public void colorChooser() {
 
 
         color = JColorChooser.showDialog(this, "pick", Color.ORANGE);
@@ -242,7 +211,7 @@ public class ConnectFive extends JFrame {
      * @param x the x-coordinate from pixels
      * @param y the y-coordinate from pixels
      */
-    private void passCoordinates(int x, int y) {
+    void passCoordinates(int x, int y) {
         try {
 
             if (turn) {
@@ -278,7 +247,7 @@ public class ConnectFive extends JFrame {
      * @param x
      * @return int coordinate of the square that was clicked on the board
      */
-    private int locateXY(int x) {
+    int locateXY(int x) {
         int pxlsize = 675;
         int gridSize = squareSize;
         int distance = pxlsize / gridSize;
