@@ -1,4 +1,4 @@
-package cs3331;
+package cs3331;import java.util.Random;
 
 public class EasyCompAI extends CompPlayer {
     @Override
@@ -8,5 +8,6 @@ public class EasyCompAI extends CompPlayer {
         coordinates[1]=(int)(Math.random()*15)+1;
         return coordinates;
     }
+
 
 }
