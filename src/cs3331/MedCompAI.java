@@ -23,8 +23,6 @@ public class MedCompAI extends CompPlayer {
                             board.addDisc(i, j, 2);
                         } catch (InValidDiskPositionException e) {
                             e.printStackTrace();
-                        } catch (PlayerWonException e) {
-                            e.printStackTrace();
                         }
 
                         //call minimax Recursively and choose the max values
@@ -44,8 +42,6 @@ public class MedCompAI extends CompPlayer {
                         try {
                             board.addDisc(i, j, 2);
                         } catch (InValidDiskPositionException e) {
-                            e.printStackTrace();
-                        } catch (PlayerWonException e) {
                             e.printStackTrace();
                         }
                         //call minimax Recursively and choose the max values
@@ -74,8 +70,7 @@ public class MedCompAI extends CompPlayer {
                         board.addDisc(i, j, 2);
                     } catch (InValidDiskPositionException e) {
                         e.printStackTrace();
-                    } catch (PlayerWonException e) {
-                        e.printStackTrace();
+                    } if (board.getBoardWon()) {
                         int moveVal = minimax(board, 0, false);
 
                         // undo

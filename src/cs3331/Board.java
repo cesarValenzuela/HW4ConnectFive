@@ -10,6 +10,7 @@ public class Board {
     private boolean[][] isFilled;
     private int counter = 0;
     private boolean boardWon=false;
+    private int winner = 0;
 
     /**
      * Defines the size of the board
@@ -42,6 +43,8 @@ public class Board {
             counter++;
             if (checkForWin(tiles[y][x])) {
                 boardWon=true;
+                winner = player;
+
             }
 
         } else {
@@ -144,5 +147,7 @@ public class Board {
         return newBoard;
     }
 
-
+    public int getWinner() {
+        return winner;
+    }
 }
