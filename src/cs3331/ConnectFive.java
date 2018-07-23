@@ -35,8 +35,6 @@ public class ConnectFive extends JFrame {
      */
     private final static String IMAGE_DIR = "/image/";
 
-    private JColorChooser tcc;
-
     private JLabel message;
     private BoardPanel boardPanel;
     private int squareSize = 15;
@@ -257,37 +255,37 @@ public class ConnectFive extends JFrame {
      * @param x the x-coordinate from pixels
      * @param y the y-coordinate from pixels
      */
-    protected void passCoordinates(int x, int y) {
-        try {
-            if (turn) {
-                message.setText("Player 2's turn");
-                boardPanel.getBoard().addDisc(x - 1, y - 1, 1);
-                turn = false;
-            } else {
-                message.setText("Player 1's turn");
-                boardPanel.getBoard().addDisc(x - 1, y - 1, 2);
-                turn = true;
-            }
-
-        } catch (InValidDiskPositionException ex1) {
-            message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
-            Sound.playInvalidTileSound();
-
-        } catch (Exception ex1) {
-            System.out.println("ITS A TIE");
-
-        }
-        if (boardPanel.getBoard().getBoardWon()) {
-            if (boardPanel.getBoard().getWinner() == 1) {
-                message.setText("PLAYER 1 WINS");
-                boardPanel.setVisible(false);
-            } else {
-                message.setText("PLAYER 2 WINS");
-                boardPanel.setVisible(false);
-            }
-            Sound.playWinSound();
-        }
-    }
+//    protected void passCoordinates(int x, int y) {
+//        try {
+//            if (turn) {
+//                message.setText("Player 2's turn");
+//                boardPanel.getBoard().addDisc(x - 1, y - 1, 1);
+//                turn = false;
+//            } else {
+//                message.setText("Player 1's turn");
+//                boardPanel.getBoard().addDisc(x - 1, y - 1, 2);
+//                turn = true;
+//            }
+//
+//        } catch (InValidDiskPositionException ex1) {
+//            message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
+//            Sound.playInvalidTileSound();
+//
+//        } catch (Exception ex1) {
+//            System.out.println("ITS A TIE");
+//
+//        }
+//        if (boardPanel.getBoard().getBoardWon()) {
+//            if (boardPanel.getBoard().getWinner() == 1) {
+//                message.setText("PLAYER 1 WINS");
+//                boardPanel.setVisible(false);
+//            } else {
+//                message.setText("PLAYER 2 WINS");
+//                boardPanel.setVisible(false);
+//            }
+//            Sound.playWinSound();
+//        }
+//    }
 
     /**
      * takes the pixels in the window and divides it by board size
@@ -323,11 +321,17 @@ public class ConnectFive extends JFrame {
         return message;
     }
 
-    /**
-     * Initializes the frame for the GUI and starts the application.
-     */
-    public static void main(String[] args) {
-        new ConnectFive();
+    public boolean isTurn() {
+        return turn;
     }
+
+    public void setTurn(boolean turn) {
+        this.turn = turn;
+    }
+
+    public BoardPanel getBoardPanel() {
+        return boardPanel;
+    }
+
 
 }
