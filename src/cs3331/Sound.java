@@ -21,6 +21,7 @@ public class Sound{
     public static void playInvalidTileSound(){
         playSound("src\\Sound\\errorSound.wav");
     }
+
     public static void playAlertSound(){
         playSound("src\\Sound\\alertSound.wav");
     }

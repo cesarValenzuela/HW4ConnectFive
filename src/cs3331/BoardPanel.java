@@ -20,8 +20,9 @@ public class BoardPanel extends JPanel {
     private Board board;
     private int grid; // size of grid
 
-    private Color colorP1 = Color.RED;
-    private Color colorP2 = Color.BLACK;
+
+    private Color colorP1;
+    private Color colorP2;
 
     /**
      * Creates an instance of this panel for the discs board.
@@ -32,6 +33,8 @@ public class BoardPanel extends JPanel {
         grid = this.board.size();
         setOpaque(true);
         setBackground(Color.CYAN);
+        setColorP1(Color.RED);
+        setColorP2(Color.BLACK);
     }
 
     public int setSize(int grid) { // set size 9 or 15
@@ -110,7 +113,7 @@ public class BoardPanel extends JPanel {
                     g22d.fill(circle);
                 } else if (board.getTiles(i, j) != null && board.getTiles(i, j).getPlayer() == 2) {
                     Ellipse2D.Double circle = new Ellipse2D.Double(i * temp + 25, j * temp + 25, discPxl, discPxl);
-                    g22d.setPaint(Color.BLACK);
+                    g22d.setPaint(colorP2);
                     g22d.fill(circle);
                 }
             }
