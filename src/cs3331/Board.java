@@ -107,97 +107,20 @@ public class Board {
         }
         return 0;
     }
-/*    //dx:0 dy:-1 upCheck
-    private int upCheck(int x, int y, char player) {
-        try {
-            if (tiles[y][x].getPlayer().getSymbol() == player) {
-                return 1 + upCheck(x, y - 1, player);
-            }
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-            return 0;
-        }
-        return 0;
-    }
-    //dx:0 dy:1 downCheck
-    private int downCheck(int x, int y, char player) {
-        try {
-            if (tiles[y][x].getPlayer().getSymbol() == player)
-                return 1 + downCheck(x, y + 1, player);
 
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-            return 0;
+    /**
+     * This is used in the AI
+     * @param x
+     * @param y
+     */
+    public void removeTile(int x,int y){
+        if(!isFilled[y][x]){
+            counter--;
+            tiles[y][x]=null;
+            isFilled[y][x]=false;
+
         }
-        return 0;
     }
-    //dx:-1 dy:0 leftCheck
-    private int leftCheck(int x, int y, char player) {
-        try {
-            if (tiles[y][x].getPlayer().getSymbol() == player)
-                return 1 + leftCheck(x - 1, y, player);
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-            return 0;
-        }
-        return 0;
-    }
-    //dx:1 dy:0 rightCheck
-    private int rightCheck(int x, int y, char player) {
-        try {
-            if (tiles[y][x].getPlayer().getSymbol() == player) {
-                return 1 + rightCheck(x + 1, y, player);
-            }
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-            return 0;
-        }
-        return 0;
-    }
-    //dx:-1 dy:-1 leftUpCheck
-    private int leftUpCheck(int x, int y, char player) {
-        try {
-            if (tiles[y][x].getPlayer().getSymbol() == player) {
-                return 1 + leftUpCheck(x - 1, y - 1, player);
-            }
-        } catch (NullPointerException e) {
-            return 0;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return 0;
-        }
-        return 0;
-    }
-    //dx:1 dy:1 rightDownCheck
-    private int rightDownCheck(int x, int y, char player) {
-        try {
-            if (tiles[y][x].getPlayer().getSymbol() == player)
-                return 1 + rightDownCheck(x + 1, y + 1, player);
-        } catch (NullPointerException e) {
-            return 0;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return 0;
-        }
-        return 0;
-    }
-    //dx:-1 dy:1 leftDownCheck
-    private int leftDownCHeck(int x, int y, char player) {
-        try {
-            if (tiles[y][x].getPlayer().getSymbol() == player) {
-                return 1 + leftDownCHeck(x - 1, y + 1, player);
-            }
-        } catch (NullPointerException e) {
-            return 0;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return 0;
-        }
-        return 0;
-    }
-    //dx:1 dy:-1 rightUpCheck
-    private int rightUpCheck(int x, int y, char player) {
-        try {
-            if (tiles[y][x].getPlayer().getSymbol() == player)
-                return 1 + rightUpCheck(x + 1, y - 1, player);
-        } catch (NullPointerException e) {
-            return 0;
-        } catch (ArrayIndexOutOfBoundsException e) {
-            return 0;
-        }
-        return 0;
-    }*/
+
+
 }

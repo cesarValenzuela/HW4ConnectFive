@@ -124,6 +124,52 @@ public class ConnectFive extends JFrame {
         easyButton = new JButton(createImageIcon("easy30.png"));
         mediumButton = new JButton(createImageIcon("medium30.png"));
 
+    private ImageIcon createImageIcon(String filename) {
+        URL imageURL = getClass().getResource(IMAGE_DIR + filename);
+        if (imageURL != null) {
+            return new ImageIcon(imageURL);
+        }
+        return null;
+    }
+
+    /**
+     * creates the buttons, and adds the other panels to create
+     * the overall GUI of the connect 5 game.
+     * @param size the size of the board to be played
+     */
+    public void createGUI(int size) {
+        //adding buttons (top)
+        JPanel boardSizePanel = new JPanel(new FlowLayout());
+        JButton largeBoard = new JButton("Board Size (15x15)");
+        JButton smallBoard = new JButton("Board Size (9x9)");
+        //ATTENTION THIS IS NOT WORKING IF NO IS CLICKED IT CRATES A NEW BOARD, ALSO CANCEL DOES NOT WORK SOME TIMES
+        for (JButton button : new JButton[]{largeBoard, smallBoard}) {
+            button.setFocusPainted(false);
+            button.addActionListener(e -> {
+                int ans;
+                message.setText((e.getSource() == largeBoard ? "15" : "9"));
+                Sound.playAlertSound();
+                if (e.getSource() == largeBoard) {
+                    ans = JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
+                    switch (ans){
+                        case NO_OPTION:
+
+                        case YES_OPTION:
+                            this.dispose();
+                            new ConnectFive(15);
+                    }
+
+                } else {
+                    JOptionPane.showConfirmDialog(this, "Start NEW GAME?");
+                    this.dispose();
+                    new ConnectFive(9);
+
+                }
+            });
+            boardSizePanel.add(button);
+        }
+
+
         playButton.setToolTipText("Play a new game.");
         playButton.setFocusPainted(false);
 
@@ -144,16 +190,55 @@ public class ConnectFive extends JFrame {
         easyButton.addActionListener(eal);
     }
 
+
     void addMediumListener(ActionListener mal) {
         mediumButton.addActionListener(mal);
     }
-
     void addPlayListener(ActionListener pal){
         playButton.addActionListener(pal);
     }
 
     void addPaintListener(ActionListener paintal) {
         paintButton.addActionListener(paintal);
+    }
+    /**
+     * adds disc to the board and checks which player placed it
+     *
+     * @param x  the x-coordinate from pixels
+     * @param y  the y-coordinate from pixels
+     */
+    private void passCoordinates(int x, int y) {
+            try {
+
+                if (turn) {
+                    message.setText("Player 2's turn");
+                    boardPanel.getBoard().addDisc(x - 1, y - 1, 1);
+                    turn = false;
+                } else {
+                    message.setText("Player 1's turn");
+                    boardPanel.getBoard().addDisc(x - 1, y - 1, 2);
+                    turn = true;
+                }
+            } catch (PlayerWonException ex1) {
+
+                if (turn) {
+
+                    message.setText("PLAYER 1 IS THE WINNER!");
+                    boardPanel.setVisible(false);
+                } else {
+                    message.setText("PLAYER 2 IS THE WINNER");
+                    boardPanel.setVisible(false);
+                }
+                //winning sound here
+                Sound.playWinSound();
+            } catch (InValidDiskPositionException ex1) {
+                message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
+                Sound.playInvalidTileSound();
+
+            } catch (Exception ex1) {
+                System.out.println("Something else went wrong");
+            }
+        Sound.playTileSound();
     }
 
     public void addMouseListener(MouseListener e){
@@ -210,35 +295,7 @@ public class ConnectFive extends JFrame {
      * @param x the x-coordinate from pixels
      * @param y the y-coordinate from pixels
      */
-    void passCoordinates(int x, int y) {
-        try {
-
-            if (turn) {
-                message.setText("Player 2's turn");
-                boardPanel.getBoard().addDisc(x - 1, y - 1, 1);
-                turn = false;
-            } else {
-                message.setText("Player 1's turn");
-                boardPanel.getBoard().addDisc(x - 1, y - 1, 2);
-                turn = true;
-            }
-        } catch (PlayerWonException ex1) {
-            if (turn) {
-                boardPanel.setVisible(false);
-                message.setText("PLAYER 1 IS THE WINNER!");
-            } else {
-                message.setText("PLAYER 2 IS THE WINNER");
-                boardPanel.setVisible(false);
-            }
-        } catch (InValidDiskPositionException ex1) {
-            message.setText("INVALID PLACEMENT: ALREADY OCCUPIED");
-
-        } catch (Exception ex1) {
-            System.out.println("ITS A TIE");
-
-        }
-    }
-
+    
     /**
      * takes the pixels in the window and divides it by board size
      * to return the coordinate of each square in the board grid
