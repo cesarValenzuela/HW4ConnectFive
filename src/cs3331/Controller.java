@@ -41,11 +41,13 @@ public class Controller {
 
             if (gui.isTurn()) {
                 gui.getMessage().setText("Player 2's turn");
-                gui.getBoardPanel().getBoard().addDisc(x - 1, y - 1, 1);
+                gui.getBoardPanel().getP1().setMove(x,y);
+                gui.getBoardPanel().getBoard().addDisc(gui.getBoardPanel().getP1().currX - 1, gui.getBoardPanel().getP1().currY - 1, 1);
                 gui.setTurn(false);
             } else {
                 gui.getMessage().setText("Player 1's turn");
-                gui.getBoardPanel().getBoard().addDisc(x - 1, y - 1, 2);
+                gui.getBoardPanel().getP2().setMove(x,y);
+                gui.getBoardPanel().getBoard().addDisc(gui.getBoardPanel().getP2().currX - 1, gui.getBoardPanel().getP2().currY - 1, 2);
                 gui.setTurn(true);
             }
         } catch (InValidDiskPositionException ex) {
@@ -115,6 +117,7 @@ public class Controller {
     class EasyListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             System.out.println("EASY PEASY");
+            gui.getBoardPanel().setP2('e');
         }
     }
 

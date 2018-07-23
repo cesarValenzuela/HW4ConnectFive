@@ -5,6 +5,18 @@ public class MedCompAI extends Computer {
         super(currPlayer, symbol);
     }
 
+    @Override
+    public void setMove(int x, int y) {
+        int[] point=getComputerCoordinates();
+        currY=point[0];
+        currX=point[1];
+    }
+
+    @Override
+    public int[] getMove() {
+        return new int[]{currY,currX};
+    }
+
     // need to make this medium difficulty
     public int[] getComputerCoordinates() {
         int[] coordinates = new int[2];

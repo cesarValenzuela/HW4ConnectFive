@@ -23,7 +23,7 @@ public class BoardPanel extends JPanel {
     private Player p1;
     private Player p2;
     //private Color p1.;
-    private Color colorP2;
+    //private Color colorP2;
 
     /**
      * Creates an instance of this panel for the discs board.
@@ -31,7 +31,7 @@ public class BoardPanel extends JPanel {
     public BoardPanel(Board board) {
         super(true);
         p1=new Human(1,'1');
-        p2=new EasyCompAI(2,'2');
+        p2=new Human(2,'2');
 
         this.board = board;
         grid = this.board.size();
@@ -125,5 +125,16 @@ public class BoardPanel extends JPanel {
             }
         }
     }
+    public void setP2(char p2Type){
+        if(p2Type=='e')
+            p2=new EasyCompAI(2,'2');
+        else if(p2Type=='m')
+            p2=new MedCompAI(2,'2');
+        else{
+            p2=new Human(2,'2');
+        }
+    }
+    public Player getP2(){return p2;}
+    public Player getP1(){return p1;}
 
 }
