@@ -147,6 +147,10 @@ public class Controller {
     class EasyListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             System.out.println("ez");
+            //We are creating a new board
+            model=new Board(model.size());
+            gui=new ConnectFive(model.size());
+            //gui.repaint();
             gui.getBoardPanel().setP2('e');
             //HumanVsAI();
 
@@ -171,10 +175,17 @@ public class Controller {
             int x = gui.locateXY(e.getX());
             int y = gui.locateXY(e.getY());
             Sound.playTileSound();
+            System.out.println(gui.getBoardPanel().getP2().getIsReal());
+            //Everytime we switch from hardness or comp to 2p we MUST create a new Board
             if (gui.getBoardPanel().getP2().getIsReal()){
+
                 HumanVHuman(x,y);
-            } else {
-                HumanVsAI(x,y);
+            } else {//to be honest i do not think that the disticion of these two classes are necessary
+                if(gui.getBoardPanel().getP2()instanceof MedCompAI)
+                HumanVsAI(x,y);//medium
+                else if(gui.getBoardPanel().getP2() instanceof EasyCompAI){
+                    HumanVsAI(x,y);//easy
+                }
             }
 
             gui.repaint();
