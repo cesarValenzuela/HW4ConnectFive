@@ -1,25 +1,14 @@
-package cs3331;
+package cs3331.hw4;
 
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.net.URL;
 
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
-
-import java.awt.image.ImageObserver;
-import java.net.URL;
-import java.text.AttributedCharacterIterator;
-
-import static javax.swing.JOptionPane.NO_OPTION;
-import static javax.swing.JOptionPane.YES_OPTION;
 
 
 /**

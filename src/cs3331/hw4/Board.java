@@ -1,4 +1,4 @@
-package cs3331;
+package cs3331.hw4;
 
 /**
  * Contains the model for the Connect Five board. (No GUI elements should placed here.)

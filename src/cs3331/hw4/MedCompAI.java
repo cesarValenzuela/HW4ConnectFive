@@ -1,4 +1,4 @@
-package cs3331;
+package cs3331.hw4;
 
 public class MedCompAI extends Computer {
     public MedCompAI(int currPlayer, char symbol) {

@@ -1,9 +1,6 @@
-package cs3331;
+package cs3331.hw4;
 
-import javax.naming.InvalidNameException;
-import javax.naming.ldap.Control;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
 import static javax.swing.JOptionPane.NO_OPTION;
