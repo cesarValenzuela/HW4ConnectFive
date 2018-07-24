@@ -6,6 +6,7 @@ public class Human extends Player {
 
     public Human(int currPlayer, char symbol) {
         super(currPlayer, symbol);
+   super.isReal=true;
     }
 
     @Override

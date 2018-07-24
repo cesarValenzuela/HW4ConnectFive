@@ -8,15 +8,19 @@ import java.awt.*;
 public abstract class Player {
     protected int currX;
     protected int currY;
+    protected boolean isReal;
+    public boolean getIsReal(){
+        return isReal;
+    }
     private Color tileColor;
     private int playerName;//will be useful for the future
     private char symbol;// should be 1 or 2 will be useful for the future
-    private boolean isReal;// will be used later on once AI is implemented
+   // private boolean isReal;// will be used later on once AI is implemented
 
     public Player(int currPlayer, char symbol) {
         this.playerName = currPlayer;
         this.symbol = symbol;
-
+       // isReal = true;
     }
     public abstract void setMove(int x,int y);
     public abstract int[] getMove();
@@ -37,9 +41,5 @@ public abstract class Player {
     }
     public int getCurrX(){return currX;}
     public int getCurrY(){return currY;}
-
-    public boolean isReal() {
-        return isReal;
-    }
     //Eventually we will implement the AI stuff here or related to here that is why we have the irReal
 }
