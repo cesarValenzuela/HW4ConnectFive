@@ -150,24 +150,49 @@ public class ConnectFive extends JFrame {
 
     private JMenuBar menuBar() {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menu = new JMenu("Game");
-
-        //when menu is open - pressing G triggers something
         menu.setMnemonic(KeyEvent.VK_G);
         menu.getAccessibleContext().setAccessibleDescription("Game Menu");
-
         menuBar.add(menu);
 
-        JMenuItem menuItem = new JMenuItem("New Game");
-        menuItem.setIcon(createImageIcon("play.png"));
+        //Create Menu Items & set Icons
+        JMenuItem changeSize = new JMenuItem("Change Size");
+        changeSize.setIcon(createImageIcon("play.png"));
+        JMenuItem easyDifficulty = new JMenuItem("Play V.S COM (EASY)");
+        easyDifficulty.setIcon(createImageIcon("easy.png"));
+        JMenuItem mediumDifficulty = new JMenuItem("Play V.S COM (MEDIUM)");
+        mediumDifficulty.setIcon(createImageIcon("medium.png"));
+        JMenuItem ChageColors = new JMenuItem("Change Colors");
+        ChageColors.setIcon(createImageIcon("paint.png"));
+        JMenuItem online = new JMenuItem("Play Online");
+        online.setIcon(createImageIcon("wifi-green.png"));
 
-
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+        // set keyStrokes
+        changeSize.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
                 ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("Play a new game");
-        //menuItem.addActionListener();
-        menu.add(menuItem);
+        easyDifficulty.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+                ActionEvent.ALT_MASK));
+        mediumDifficulty.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
+                ActionEvent.ALT_MASK));
+        ChageColors.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
+                ActionEvent.ALT_MASK));
+        online.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
+                ActionEvent.ALT_MASK));
+
+        changeSize.getAccessibleContext().setAccessibleDescription("Play new game");
+
+        // listeners
+        changeSize.addActionListener(new Controller.PlayListener());
+        easyDifficulty.addActionListener(new Controller.EasyListener());
+        mediumDifficulty.addActionListener(new Controller.MediumListener());
+        ChageColors.addActionListener(new Controller.PaintListener());
+
+        // add to mennu
+        menu.add(changeSize);
+        menu.add(easyDifficulty);
+        menu.add(mediumDifficulty);
+        menu.add(ChageColors);
+        menu.add(online);
 
         return menuBar;
     }
