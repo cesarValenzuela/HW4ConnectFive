@@ -40,7 +40,7 @@ public class EasyCompAI extends Computer {
                     //accept move
                     validMove = true;
                 }
-            }catch (ArrayIndexOutOfBoundsException e){}
+            }catch (ArrayIndexOutOfBoundsException e){}//sop
         }
 
     }
