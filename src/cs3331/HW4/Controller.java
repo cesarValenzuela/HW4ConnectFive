@@ -1,4 +1,4 @@
-package cs3331.hw4;
+package cs3331.hw4;//lol
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +20,7 @@ public class Controller {
     private static Board model;
     private static ConnectFive gui;
 
-    public Controller(Board model, ConnectFive gui) {
+    private Controller(Board model, ConnectFive gui) {
         this.model = model;
         this.gui = gui;
 
@@ -193,12 +193,12 @@ public class Controller {
         }
     }
 
-    public static void sizerequest2(String text,char test ){
+    private static void sizerequest2(String text, char test) {
         Object[] options = {"15x15", "9x9"};
         Object[] yesOrNo = {"Yes", "No"};
         Sound.playAlertSound();
 
-        int confirm = JOptionPane.showOptionDialog(gui,text, "confirm",
+        int confirm = JOptionPane.showOptionDialog(gui, text, "confirm",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                 null, yesOrNo, yesOrNo[1]);
 
@@ -209,19 +209,21 @@ public class Controller {
                     null, options, options[1]);
             // 15 x 15
             if (n == JOptionPane.YES_OPTION) {
-                if(test=='e') {
+                if (test == 'e') {
                     easyListenerHelper(15);
-                }
+                } else if (test == 'm') {
                     MediumListenerHelper(15);
-                 }else{
-                if(test=='e') {
-                    easyListenerHelper(9);
                 }
-                MediumListenerHelper(9);
+            } else {
+                if (test == 'e') {
+                    easyListenerHelper(9);
+                } else if (test == 'm') {
+                    MediumListenerHelper(9);
+                }
             }
         }
     }
-    public static void sizerequest(String text ){
+    private static void sizerequest(String text){
         Object[] options = {"15x15", "9x9"};
         Object[] yesOrNo = {"Yes", "No"};
         Sound.playAlertSound();

@@ -40,7 +40,9 @@ public class BoardPanel extends JPanel {
         p1.setTileColor(Color.RED);
         p2.setTileColor(Color.BLACK);
     }
-    public BoardPanel(Board board,char p2Type){
+
+
+    BoardPanel(Board board, char p2Type){
         super(true);
         p1=new Human(1,'1');
         p1.setTileColor(Color.RED);
@@ -64,23 +66,23 @@ public class BoardPanel extends JPanel {
         repaint();
     }
 
-    public Color getColorP1() {
+    Color getColorP1() {
         return p1.getTileColor();
     }
 
-    public void setColorP1(Color color) {
+    void setColorP1(Color color) {
         p1.setTileColor(color);
     }
 
-    public Color getColorP2() {
+    Color getColorP2() {
         return p2.getTileColor();
     }
 
-    public void setColorP2(Color colorP2) {
+    void setColorP2(Color colorP2) {
         p2.setTileColor(colorP2);
     }
 
-    public Board getBoard() {
+    Board getBoard() {
         return board;
     }
 
@@ -88,7 +90,7 @@ public class BoardPanel extends JPanel {
     /**
      * Paints the state of the board along with the discs placed
      *
-     * @param g
+     * @param g g is graphics
      */
     public void paint(Graphics g) {
         g.setColor(Color.BLACK);

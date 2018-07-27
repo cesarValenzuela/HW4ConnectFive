@@ -51,7 +51,7 @@ public class ConnectFive extends JFrame {
      * Constructor that initializes and adds all the components of the frame
      * including anonymous classes for the handlers.
      */
-    public ConnectFive() {
+    ConnectFive() {
         setTitle("Connect Five");
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,7 +63,7 @@ public class ConnectFive extends JFrame {
         pack();
     }
 
-    public ConnectFive(int size, char p2Type) {
+    ConnectFive(int size, char p2Type) {
         super();
         createGUI(size,p2Type);
 
@@ -81,7 +81,7 @@ public class ConnectFive extends JFrame {
      *
      * @param size the size of the board to be played
      */
-    public void createGUI(int size, char p2Type) {
+    private void createGUI(int size, char p2Type) {
         JPanel boardSizePanel = new JPanel(new FlowLayout());
 
         JPanel jPanel = new JPanel();
@@ -151,7 +151,7 @@ public class ConnectFive extends JFrame {
 
     }
 
-    protected JMenuBar menuBar() {
+    private JMenuBar menuBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Game");
         menu.setMnemonic(KeyEvent.VK_G);
@@ -204,7 +204,7 @@ public class ConnectFive extends JFrame {
     /**
      * creates the board panel that displays the current game
      *
-     * @param size
+     * @param size this is the size or the board
      * @return a panel that can be added to the window
      */
     private BoardPanel boardPan(int size,char p2Type) {
@@ -231,7 +231,7 @@ public class ConnectFive extends JFrame {
         return statusPanel;
     }
 
-    protected void colorChooser() {
+    void colorChooser() {
 
         //JDialog popUp=new JDialog(new JFrame(),"Testing","this is an example");
         popup = new JPanel();
@@ -255,7 +255,7 @@ public class ConnectFive extends JFrame {
 
     }
 
-    protected void colorChooserHelper(char player) {
+    void colorChooserHelper(char player) {
 
         color = JColorChooser.showDialog(this, "pick", Color.ORANGE);
         if (color == null) {
@@ -339,19 +339,19 @@ public class ConnectFive extends JFrame {
         return menuItem;
     }
 
-    public JLabel getMessage() {
+    JLabel getMessage() {
         return message;
     }
 
-    public boolean isTurn() {
+    boolean isTurn() {
         return turn;
     }
 
-    public void setTurn(boolean turn) {
+    void setTurn(boolean turn) {
         this.turn = turn;
     }
 
-    public BoardPanel getBoardPanel() {
+    BoardPanel getBoardPanel() {
         return boardPanel;
     }
 
