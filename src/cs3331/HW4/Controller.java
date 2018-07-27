@@ -119,35 +119,35 @@ public class Controller {
      */
     static class EasyListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Controller.sizerequest("Start a new game Against Baby?");
-            System.out.println("ez");
-            Color p1ColorTmp=gui.getBoardPanel().getColorP1();
-            gui.dispose();
-            new Controller(new Board(model.size()), new ConnectFive(model.size(),'e'));
-
-            //System.out.println("P2 is type: "+gui.getBoardPanel().getP2().getClass());
-           // System.out.println(gui.getBoardPanel().getP2() instanceof EasyCompAI);
-
-            gui.getBoardPanel().setP2('e');
-            gui.getBoardPanel().setColorP1(p1ColorTmp);
-            gui.getBoardPanel().getP1().setTileColor(p1ColorTmp);
-            gui.getBoardPanel().setColorP2(Color.BLACK);
-            //HumanVsAI();
+            Controller.sizerequest2("Start a new game against easyAI?",'e');
 
         }
     }
+    private static void easyListenerHelper(int boardSize){
+        System.out.println("ez");
+        Color p1ColorTmp=gui.getBoardPanel().getColorP1();
+        gui.dispose();
+        new Controller(new Board(boardSize), new ConnectFive(boardSize,'e'));
+        gui.getBoardPanel().setP2('e');
+        gui.getBoardPanel().setColorP1(p1ColorTmp);
+        gui.getBoardPanel().getP1().setTileColor(p1ColorTmp);
+        gui.getBoardPanel().setColorP2(Color.BLACK);
 
+    }
+    private static void MediumListenerHelper(int boardSize){
+        System.out.println("MEDIUM");
+        gui.getBoardPanel().setP2('m');
+        gui.dispose();
+        new Controller(new Board(boardSize), new ConnectFive(boardSize,'m'));
+        gui.getBoardPanel().setColorP2(Color.BLACK);
+        gui.getBoardPanel().setP2('m');
+    }
     /**
      * Action Listener for medium AI button
      */
     static class MediumListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            System.out.println("MEDIUM");
-            gui.getBoardPanel().setP2('m');
-            gui.dispose();
-            new Controller(new Board(model.size()), new ConnectFive(model.size(),'m'));
-            gui.getBoardPanel().setColorP2(Color.BLACK);
-            gui.getBoardPanel().setP2('m');
+            Controller.sizerequest2("Start a new game against mediumAI?",'m');
         }
     }
 
@@ -193,6 +193,34 @@ public class Controller {
         }
     }
 
+    public static void sizerequest2(String text,char test ){
+        Object[] options = {"15x15", "9x9"};
+        Object[] yesOrNo = {"Yes", "No"};
+        Sound.playAlertSound();
+
+        int confirm = JOptionPane.showOptionDialog(gui,text, "confirm",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                null, yesOrNo, yesOrNo[1]);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            int n = JOptionPane.showOptionDialog(gui,
+                    "pick a size", "New Game",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                    null, options, options[1]);
+            // 15 x 15
+            if (n == JOptionPane.YES_OPTION) {
+                if(test=='e') {
+                    easyListenerHelper(15);
+                }
+                    MediumListenerHelper(15);
+                 }else{
+                if(test=='e') {
+                    easyListenerHelper(9);
+                }
+                MediumListenerHelper(9);
+            }
+        }
+    }
     public static void sizerequest(String text ){
         Object[] options = {"15x15", "9x9"};
         Object[] yesOrNo = {"Yes", "No"};
