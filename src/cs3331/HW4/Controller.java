@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-import static javax.swing.JOptionPane.NO_OPTION;
 
 /**
  * Author: Cesar Valenzuela
@@ -161,7 +160,7 @@ public class Controller {
             Sound.playTileSound();
             System.out.println(gui.getBoardPanel().getP2().getIsReal());
             //Everytime we switch from hardness or comp to 2p we MUST create a new Board
-            System.out.println("P2 is of type: "+gui.getBoardPanel().getP2().getClass());
+            System.out.println("P2 is of  type: "+gui.getBoardPanel().getP2().getClass());
             if (gui.getBoardPanel().getP2() instanceof Human) {
                 HumanVHuman(x, y);
             }else if (gui.getBoardPanel().getP2() instanceof MedCompAI){
