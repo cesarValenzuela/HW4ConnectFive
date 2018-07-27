@@ -96,7 +96,7 @@ public class ConnectFive extends JFrame {
 
     }
 
-    private JToolBar toolBar() {
+    protected JToolBar toolBar() {
         JToolBar toolBar = new JToolBar("Connect5");
 
         playButton = new JButton(createImageIcon("play30.png"));
@@ -257,7 +257,7 @@ public class ConnectFive extends JFrame {
         return result + 1;
     }
 
-    private ImageIcon createImageIcon(String filename) {
+    protected ImageIcon createImageIcon(String filename) {
         URL imageURL = getClass().getResource(IMAGE_DIR + filename);
         if (imageURL != null) {
             return new ImageIcon(imageURL);

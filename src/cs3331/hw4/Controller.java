@@ -6,7 +6,6 @@ import java.awt.event.*;
 import static javax.swing.JOptionPane.NO_OPTION;
 
 /**
- * Author: Cesar Valenzuela
  * Date: 7/22/2018
  * Course: CS3331
  * Assignment: HW4
@@ -76,7 +75,7 @@ public class Controller {
             Sound.playInvalidTileSound();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("oops tie");
+            System.out.println("Exceptions get out reeee");
         }
         winHelper();
     }
@@ -145,7 +144,6 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("ez");
                 gui.getBoardPanel().setP2('e');
-                //HumanVsAI();
 
             }
         }
@@ -167,12 +165,7 @@ public class Controller {
                 int x = gui.locateXY(e.getX());
                 int y = gui.locateXY(e.getY());
                 Sound.playTileSound();
-                if (gui.getBoardPanel().getP2().isReal()){
-                    HumanVHuman(x,y);
-                } else {
-                    HumanVsAI(x,y);
-                }
-
+                HumanVHuman(x,y);
                 gui.repaint();
             }
         }
