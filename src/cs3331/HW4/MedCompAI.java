@@ -9,7 +9,7 @@ public class MedCompAI extends Computer {
 
     @Override
     public void setMove(int x, int y) {
-        
+
     }
 
     @Override

@@ -47,4 +47,5 @@ public abstract class Player {
     public char getPlayerType() {
         return playerType;
     }
+    public abstract void setMove(int x,int y,Board board);
 }

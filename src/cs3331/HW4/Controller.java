@@ -59,7 +59,7 @@ public class Controller {
         winHelper();
     }
 
-    private void HumanVsAI(int x, int y) {
+    private void HumanVsAI(int x, int y,Board board) {
         try {
 
             gui.getMessage().setText("Player 2's turn");
@@ -69,7 +69,7 @@ public class Controller {
 
             //AI
             System.out.println("AI MOVE");
-            gui.getBoardPanel().getP2().setMove(x,y);
+            gui.getBoardPanel().getP2().setMove(x,y,board);
             gui.getBoardPanel().getBoard().addDisc(gui.getBoardPanel().getP2().currX, gui.getBoardPanel().getP2().currY,2);
 
         } catch (InValidDiskPositionException ex1) {
@@ -165,9 +165,9 @@ public class Controller {
             if (gui.getBoardPanel().getP2() instanceof Human) {
                 HumanVHuman(x, y);
             }else if (gui.getBoardPanel().getP2() instanceof MedCompAI){
-                HumanVsAI(x, y);//medium we need to be able to pass the board method
+                HumanVsAI(x, y,model);//medium we need to be able to pass the board method
             }else if(gui.getBoardPanel().getP2() instanceof EasyCompAI){
-                HumanVsAI(x,y);//easy
+                HumanVsAI(x,y,model);//easy
 
             }
 

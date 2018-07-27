@@ -17,4 +17,9 @@ public class Human extends Player {
     public int[] getMove() {
         return new int[]{this.currY,this.currX};
     }
+
+    @Override
+    public void setMove(int x, int y, Board board) {
+
+    }
 }

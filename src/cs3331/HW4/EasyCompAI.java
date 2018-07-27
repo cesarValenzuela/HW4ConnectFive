@@ -27,6 +27,24 @@ public class EasyCompAI extends Computer {
         return new int[]{currY,currX};
     }
 
+    @Override
+    public void setMove(int x, int y, Board board) {
+        boolean validMove=false;
+        //here is where we check if the points are good points
+        while (!validMove) {
+            try {
+
+
+                setMove(x, y);
+                if (board.isValidPosition(currY, currX)) {
+                    //accept move
+                    validMove = true;
+                }
+            }catch (ArrayIndexOutOfBoundsException e){}
+        }
+
+    }
+
     public int[] getComputerCoordinates() {
         int[] coordinates=new int[2];
         coordinates[0]=(int)(Math.random()*15);
