@@ -1,4 +1,4 @@
-package cs3331;
+package cs3331.HW4;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -39,6 +39,18 @@ public class BoardPanel extends JPanel {
         setBackground(Color.CYAN);
         p1.setTileColor(Color.RED);
         p2.setTileColor(Color.BLACK);
+    }
+    public BoardPanel(Board board,char p2Type){
+        super(true);
+        p1=new Human(1,'1');
+        p1.setTileColor(Color.RED);
+        this.board = board;
+        grid = this.board.size();
+        setOpaque(true);
+        setBackground(Color.CYAN);
+        setP2(p2Type);
+        p2.setTileColor(Color.BLACK);
+
     }
 
     public int setSize(int grid) { // set size 9 or 15
@@ -124,9 +136,10 @@ public class BoardPanel extends JPanel {
         }
     }
     public void setP2(char p2Type){
-        if(p2Type=='e')
-            p2=new EasyCompAI(2,'2');
-        else if(p2Type=='m')
+        if(p2Type=='e') {
+            p2 = null;
+            p2 = new EasyCompAI(2, '2');
+        }else if(p2Type=='m')
             p2=new MedCompAI(2,'2');
         else{
             p2=new Human(2,'2');

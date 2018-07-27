@@ -1,25 +1,17 @@
-package cs3331;
+package cs3331.HW4;
 
+
+import cs3331.HW4.Board;
+import cs3331.HW4.BoardPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.net.URL;
 
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
-
-import java.awt.image.ImageObserver;
-import java.net.URL;
-import java.text.AttributedCharacterIterator;
-
-import static javax.swing.JOptionPane.NO_OPTION;
-import static javax.swing.JOptionPane.YES_OPTION;
 
 
 /**
@@ -64,16 +56,16 @@ public class ConnectFive extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setLayout(new BorderLayout());
-
-        createGUI(15);
+        //here we need to change it to be able to change to p2 type
+        createGUI(15,'j');
 
         setVisible(true);
         pack();
     }
 
-    public ConnectFive(int size) {
+    public ConnectFive(int size, char p2Type) {
         super();
-        createGUI(size);
+        createGUI(size,p2Type);
 
         squareSize = size;
         setVisible(true);
@@ -89,13 +81,13 @@ public class ConnectFive extends JFrame {
      *
      * @param size the size of the board to be played
      */
-    public void createGUI(int size) {
+    public void createGUI(int size, char p2Type) {
         JPanel boardSizePanel = new JPanel(new FlowLayout());
 
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new BorderLayout());
         jPanel.add(boardSizePanel, BorderLayout.NORTH);
-        jPanel.add(boardPan(size), BorderLayout.CENTER);
+        jPanel.add(boardPan(size,p2Type), BorderLayout.CENTER);
         jPanel.add(statusPanel(), BorderLayout.SOUTH);
 
         JPanel jPanel1 = new JPanel();
@@ -159,29 +151,55 @@ public class ConnectFive extends JFrame {
 
     }
 
-    private JMenuBar menuBar() {
+    protected JMenuBar menuBar() {
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menu = new JMenu("Game");
-
-        //when menu is open - pressing G triggers something
         menu.setMnemonic(KeyEvent.VK_G);
         menu.getAccessibleContext().setAccessibleDescription("Game Menu");
-
         menuBar.add(menu);
 
-        JMenuItem menuItem = new JMenuItem("New Game");
-        menuItem.setIcon(createImageIcon("play.png"));
+        //Create Menu Items & set Icons
+        JMenuItem changeSize = new JMenuItem("Change Size");
+        changeSize.setIcon(createImageIcon("play.png"));
+        JMenuItem easyDifficulty = new JMenuItem("Play V.S COM (EASY)");
+        easyDifficulty.setIcon(createImageIcon("easy.png"));
+        JMenuItem mediumDifficulty = new JMenuItem("Play V.S COM (MEDIUM)");
+        mediumDifficulty.setIcon(createImageIcon("medium.png"));
+        JMenuItem ChageColors = new JMenuItem("Change Colors");
+        ChageColors.setIcon(createImageIcon("paint.png"));
+        JMenuItem online = new JMenuItem("Play Online");
+        online.setIcon(createImageIcon("wifi-green.png"));
 
-
-        menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+        // set keyStrokes
+        changeSize.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
                 ActionEvent.ALT_MASK));
-        menuItem.getAccessibleContext().setAccessibleDescription("Play a new game");
-        //menuItem.addActionListener();
-        menu.add(menuItem);
+        easyDifficulty.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+                ActionEvent.ALT_MASK));
+        mediumDifficulty.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M,
+                ActionEvent.ALT_MASK));
+        ChageColors.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
+                ActionEvent.ALT_MASK));
+        online.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
+                ActionEvent.ALT_MASK));
+
+        changeSize.getAccessibleContext().setAccessibleDescription("Play new game");
+
+        // listeners
+        changeSize.addActionListener(new Controller.PlayListener());
+        easyDifficulty.addActionListener(new Controller.EasyListener());
+        mediumDifficulty.addActionListener(new Controller.MediumListener());
+        ChageColors.addActionListener(new Controller.PaintListener());
+
+        // add to mennu
+        menu.add(changeSize);
+        menu.add(easyDifficulty);
+        menu.add(mediumDifficulty);
+        menu.add(ChageColors);
+        menu.add(online);
 
         return menuBar;
     }
+
 
     /**
      * creates the board panel that displays the current game
@@ -189,9 +207,9 @@ public class ConnectFive extends JFrame {
      * @param size
      * @return a panel that can be added to the window
      */
-    private BoardPanel boardPan(int size) {
+    private BoardPanel boardPan(int size,char p2Type) {
 
-        boardPanel = new BoardPanel(new Board(size));
+        boardPanel = new BoardPanel(new Board(size),p2Type);
         boardPanel.setPreferredSize(new Dimension(725, 725));
         return boardPanel;
     }
@@ -232,6 +250,8 @@ public class ConnectFive extends JFrame {
         frametmp.setVisible(true);
         frametmp.setResizable(false);
         frametmp.repaint();
+        //frametmp.dispose();
+        //frametmp.repaint();
 
     }
 
@@ -247,6 +267,8 @@ public class ConnectFive extends JFrame {
                 boardPanel.setColorP2(color);
         }
         repaint();
+        frametmp.dispose();
+        //frametmp.repaint();
     }
 
     /**

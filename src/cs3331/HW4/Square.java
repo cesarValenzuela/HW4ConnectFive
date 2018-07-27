@@ -1,4 +1,4 @@
-package cs3331;
+package cs3331.HW4;
 
 /**
  * @author Andrea Torres

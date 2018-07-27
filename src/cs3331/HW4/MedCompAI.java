@@ -1,8 +1,15 @@
-package cs3331;
+package cs3331.HW4;
 
 public class MedCompAI extends Computer {
+
     public MedCompAI(int currPlayer, char symbol) {
         super(currPlayer, symbol);
+        super.playerType='m';
+    }
+
+    @Override
+    public void setMove(int x, int y) {
+        
     }
 
     @Override
@@ -10,9 +17,9 @@ public class MedCompAI extends Computer {
 
     }
 
-    @Override
-    public void setMove(int x, int y) {
 
+    public void setMove(int x, int y,Board board) {
+        setMove(board);
     }
 
 
@@ -29,13 +36,13 @@ public class MedCompAI extends Computer {
 
     // need to make this medium difficulty
     public int[] getComputerCoordinates(Board board) {
-        int[] coordinates = makeBestMove(board);//brian's supercool code
-        return coordinates;
+        return makeBestMove(board);//brian's supercool code
+
     }
     public int minimax(Board board, int depth, boolean isMax) {
         Board temp = board.createDupilicateBoard();
-        int best = 0;
-        if(temp.isBoardFull() == true)
+        int best;
+        if(temp.isBoardFull())
             return 0;
 
         if (isMax) {

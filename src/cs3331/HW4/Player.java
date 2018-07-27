@@ -1,4 +1,4 @@
-package cs3331;
+package cs3331.HW4;
 
 import java.awt.*;
 
@@ -9,6 +9,7 @@ public abstract class Player {
     protected int currX;
     protected int currY;
     protected boolean isReal;
+    protected char playerType;
     public boolean getIsReal(){
         return isReal;
     }
@@ -42,4 +43,8 @@ public abstract class Player {
     public int getCurrX(){return currX;}
     public int getCurrY(){return currY;}
     //Eventually we will implement the AI stuff here or related to here that is why we have the irReal
+
+    public char getPlayerType() {
+        return playerType;
+    }
 }

@@ -1,7 +1,5 @@
-package cs3331;
+package cs3331.HW4;
 
-import javax.naming.InvalidNameException;
-import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -19,8 +17,8 @@ import static javax.swing.JOptionPane.NO_OPTION;
  */
 public class Controller {
 
-    private Board model;
-    private ConnectFive gui;
+    private static Board model;
+    private static ConnectFive gui;
 
     public Controller(Board model, ConnectFive gui) {
         this.model = model;
@@ -101,41 +99,16 @@ public class Controller {
     /**
      * Action Listener for the Play Button on the Tool Bar
      */
-    class PlayListener implements ActionListener {
+    static class PlayListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Object[] options = {"15x15", "9x9"};
-            Object[] yesOrNo = {"Yes", "No"};
-            int n = JOptionPane.showOptionDialog(gui,
-                    "pick a size", "New Game",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                    null, options, options[1]);
-            // 15 x 15
-            if (n == JOptionPane.YES_OPTION) {
-                int confirm = JOptionPane.showOptionDialog(gui, "Start NEW GAME?", "confirm",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                        null, yesOrNo, yesOrNo[1]);
-                if (confirm == JOptionPane.YES_OPTION) {
-                    gui.dispose();
-                    new Controller(new Board(15), new ConnectFive(15));
-                }
-                // 9 x 9
-            } else if (n == NO_OPTION) {
-                int confirm = JOptionPane.showOptionDialog(gui, "Start NEW GAME?", "confirm",
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                        null, yesOrNo, yesOrNo[1]);
-                if (confirm == JOptionPane.YES_OPTION) {
-                    gui.dispose();
-                    new Controller(new Board(9), new ConnectFive(9));
-                }
-            } else {
-            }
+            sizerequest("Start new game?");
         }
     }
 
     /**
      * Action Listener for the Paintbrush Button
      */
-    class PaintListener implements ActionListener {
+    static class PaintListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             gui.colorChooser();
         }
@@ -144,14 +117,21 @@ public class Controller {
     /**
      * Action Listener for easy AI button
      */
-    class EasyListener implements ActionListener {
+    static class EasyListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
+            Controller.sizerequest("Start a new game Against Baby?");
             System.out.println("ez");
-            //We are creating a new board
-            model=new Board(model.size());
-            gui=new ConnectFive(model.size());
-            //gui.repaint();
+            Color p1ColorTmp=gui.getBoardPanel().getColorP1();
+            gui.dispose();
+            new Controller(new Board(model.size()), new ConnectFive(model.size(),'e'));
+
+            //System.out.println("P2 is type: "+gui.getBoardPanel().getP2().getClass());
+           // System.out.println(gui.getBoardPanel().getP2() instanceof EasyCompAI);
+
             gui.getBoardPanel().setP2('e');
+            gui.getBoardPanel().setColorP1(p1ColorTmp);
+            gui.getBoardPanel().getP1().setTileColor(p1ColorTmp);
+            gui.getBoardPanel().setColorP2(Color.BLACK);
             //HumanVsAI();
 
         }
@@ -160,9 +140,13 @@ public class Controller {
     /**
      * Action Listener for medium AI button
      */
-    class MediumListener implements ActionListener {
+    static class MediumListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             System.out.println("MEDIUM");
+            gui.getBoardPanel().setP2('m');
+            gui.dispose();
+            new Controller(new Board(model.size()), new ConnectFive(model.size(),'m'));
+            gui.getBoardPanel().setColorP2(Color.BLACK);
             gui.getBoardPanel().setP2('m');
         }
     }
@@ -177,15 +161,14 @@ public class Controller {
             Sound.playTileSound();
             System.out.println(gui.getBoardPanel().getP2().getIsReal());
             //Everytime we switch from hardness or comp to 2p we MUST create a new Board
-            if (gui.getBoardPanel().getP2().getIsReal()){
+            System.out.println("P2 is of type: "+gui.getBoardPanel().getP2().getClass());
+            if (gui.getBoardPanel().getP2() instanceof Human) {
+                HumanVHuman(x, y);
+            }else if (gui.getBoardPanel().getP2() instanceof MedCompAI){
+                HumanVsAI(x, y);//medium we need to be able to pass the board method
+            }else if(gui.getBoardPanel().getP2() instanceof EasyCompAI){
+                HumanVsAI(x,y);//easy
 
-                HumanVHuman(x,y);
-            } else {//to be honest i do not think that the disticion of these two classes are necessary
-                if(gui.getBoardPanel().getP2()instanceof MedCompAI)
-                HumanVsAI(x,y);//medium
-                else if(gui.getBoardPanel().getP2() instanceof EasyCompAI){
-                    HumanVsAI(x,y);//easy
-                }
             }
 
             gui.repaint();
@@ -210,6 +193,30 @@ public class Controller {
         }
     }
 
+    public static void sizerequest(String text ){
+        Object[] options = {"15x15", "9x9"};
+        Object[] yesOrNo = {"Yes", "No"};
+        Sound.playAlertSound();
+
+        int confirm = JOptionPane.showOptionDialog(gui,text, "confirm",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                null, yesOrNo, yesOrNo[1]);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            int n = JOptionPane.showOptionDialog(gui,
+                    "pick a size", "New Game",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+                    null, options, options[1]);
+            // 15 x 15
+            if (n == JOptionPane.YES_OPTION) {
+                gui.dispose();
+                new Controller(new Board(15), new ConnectFive(15,'j'));
+            }else{
+                gui.dispose();
+                new Controller(new Board(9), new ConnectFive(9,'j'));
+            }
+        }
+    }
 
     public static void main (String[]args){
         Board board = new Board(15);

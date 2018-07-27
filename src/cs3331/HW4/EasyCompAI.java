@@ -1,4 +1,6 @@
-package cs3331;import java.util.Random;
+package cs3331.HW4;
+
+import cs3331.HW4.Computer;
 
 public class EasyCompAI extends Computer {
 
