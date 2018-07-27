@@ -1,6 +1,6 @@
-package cs3331.HW4;
+package cs3331.hw4;
 
-import cs3331.HW4.Computer;
+import cs3331.hw4.Computer;
 
 public class EasyCompAI extends Computer {
 

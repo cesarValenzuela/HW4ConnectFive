@@ -1,4 +1,4 @@
-package cs3331.HW4;
+package cs3331.hw4;
 
 public class Human extends Player {
 

@@ -1,8 +1,8 @@
-package cs3331.HW4;
+package cs3331.hw4;
 
 
-import cs3331.HW4.Board;
-import cs3331.HW4.BoardPanel;
+import cs3331.hw4.Board;
+import cs3331.hw4.BoardPanel;
 
 import javax.swing.*;
 import java.awt.*;

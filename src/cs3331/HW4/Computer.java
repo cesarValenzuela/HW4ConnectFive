@@ -1,4 +1,4 @@
-package cs3331.HW4;
+package cs3331.hw4;
 
 public abstract class Computer extends Player {
     public Computer(int currPlayer, char symbol) {
